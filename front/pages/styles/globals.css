@@ -1,0 +1,67 @@
+:root {
+    --color-primary-accent: #2614c7;
+    --color-primary: #000;
+    --color-button: #3d486c;
+    --color-paragraph: #797979;
+    --color-button-text: rgb(255, 255, 255);
+    --color-background: #fff;
+    --color-hover: #1890ff;
+    --color-anchor: #000aff;
+    --antd-color : rgba(0, 0, 0, 0.45);
+  }
+  
+  [data-theme='dark'] {
+    --color-primary-accent: #00ff4c;
+    --color-primary: #fff;
+    --color-button: #00ff4c;
+    --color-paragraph: #8a8a8a;
+    --color-button-text: rgb(0, 0, 0);
+    --color-background: #000;
+    --antd-color : white;
+  }
+  
+  *{
+    box-sizing: border-box;
+  }
+  /* 버튼과 바디 등 필요한 변수들을 설정해줌으로써 값 지정해주기  */
+  button{
+    background-color: var(--color-background);
+    color: var(--color-primary);
+  }
+  
+  body , ul , div:not(.img_overlay *,.ant-switch-handle, .ant-card-bordered *, .dropzone , .progress *){
+    background-color: var(--color-background) !important;
+    color: var(--color-primary) !important;
+    transition: background 0.3s ease;
+  }
+
+  .ant-card-meta-detail * , .userinfo_css{
+    color: var(--color-primary) !important;
+  }
+
+  .ant-card-body {background: var(--color-background) !important; }
+  
+  .antd_icon:hover ,.userinfo_css:hover{color: var(--color-hover) !important; }
+
+
+  .antd_icon{
+    color: var(--antd-color) !important
+  }
+
+  .ant-switch-handle {
+    background: none !important;
+  }
+  
+  h1,
+  h3,
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
+  .kakao_img {
+    width: 183px;
+    height: 45px;
+    border: none;
+    background-image: url('../sociallogin/kakao/kakao_login_medium_narrow.png');
+  }
