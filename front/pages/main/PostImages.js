@@ -37,7 +37,7 @@ const PostImages = ({images}) => {
     } else {
         return (
             <DivWrapper>
-                <img role="presentation" width={"50%"} src={baseURL+images[0].src} alt={images[0].src} onClick={onZoom} />
+                <img role="presentation" width={"50%"} style={{marginLeft:'1px', marginRight:'-1px'}} src={baseURL+images[0].src} alt={images[0].src} onClick={onZoom} />
                 
                     { imglen > 2 
                     ?   

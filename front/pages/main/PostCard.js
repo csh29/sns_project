@@ -135,7 +135,9 @@ const PostCard = ({post , followings}) => {
                 ]}>
                 {
                     post.Retweet ? 
-                    <Card>
+                    <Card
+                        cover={post.Retweet.Images && <PostImages images={post.Retweet.Images} />}
+                    >
                         <Card.Meta
                             avatar={ <DropdownAvatar user={post.Retweet.User}/> }
                             title={post.Retweet.User.nickname}

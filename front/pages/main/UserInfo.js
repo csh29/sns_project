@@ -20,9 +20,11 @@ const UserInfo = () => {
     const dispatch = useDispatch();
     const { user , logoutLoading } = useSelector((state) => state.user);
 
-    const onLogout = async () => {
+    const onLogout = () => {
         if(user.sociallogin === 'Y') {
             aRef.current.click()
+        } else {
+            dispatch(userAction.logoutRequest())
         }
     }
 

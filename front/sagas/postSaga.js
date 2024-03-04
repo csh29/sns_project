@@ -192,13 +192,10 @@ function* retweet(action) {
       type:postAction.retweetSuccess,
       data:result.data,
     })
-    yield put({
-      type:userAction.retweetSuccess,
-      data:result.data,
-    })
+    
   } catch (err) {
     yield put({
-      type: postAction.reteweeretweetFailure,
+      type: postAction.retweetFailure,
       error: err.response.data
     })
   }
