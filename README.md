@@ -2,6 +2,6 @@
 
 ### 1. Login Page
 
-![main](https://github.com/csh29/sns_project/assets/86338199/4132c2e4-4178-4287-ab01-21177b39e546)
+![login](https://github.com/csh29/sns_project/assets/86338199/624e2667-c2dc-4a73-8a2f-16c096094182)
 
 ### 2. Main Page
