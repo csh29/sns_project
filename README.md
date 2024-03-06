@@ -26,7 +26,7 @@ NextJS를 기반으로 한 SNS 애플리케이션입니다. NextJS와 nodeJS공�
 
 ### 1. Login Page
 
-![login](https://github.com/csh29/sns_project/assets/86338199/624e2667-c2dc-4a73-8a2f-16c096094182)
+![login](https://github.com/csh29/sns_project/assets/86338199/2e606594-a01e-4beb-b1bf-ce68ad0ce419)
 
 ### 2. Main Page
 
