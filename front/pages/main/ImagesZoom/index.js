@@ -2,11 +2,10 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Slick from 'react-slick';
 import { Overlay, Header, CloseBtn, SlickWrapper, ImgWrapper, Indicator, Global } from './styles';
-import { useSelector } from 'react-redux';
 
 const ImagesZoom = ({ images, onClose }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const baseURL = useSelector((state) => state.post.baseURL);
+  const baseURL = process.env.NEXT_PUBLIC_NODE_SERVER;
   const overlayRef = useRef();
 
   const overlayKeydown = useCallback((e) => {

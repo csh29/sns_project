@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
-import { Avatar, Card } from 'antd';
 import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
 import PostCard from '../main/PostCard';

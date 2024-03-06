@@ -1,6 +1,6 @@
 import {  Input , Modal , Dropdown , Space } from 'antd';
 import Link from 'next/link';
-import { useCallback, useState, useImperativeHandle , forwardRef, useMemo } from 'react';
+import { useCallback, useState, useImperativeHandle , forwardRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { userAction } from '../../reducers/user';

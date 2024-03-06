@@ -4,7 +4,7 @@ import useInput from '../components/UseInput'
 import { TextComponent } from '../components/Component'
 import styled from 'styled-components';
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { userAction } from '../../reducers/user'
 import SocialKakao from '../sociallogin/kakao/kakao';
 import SocialNaver from '../sociallogin/naver/naver';

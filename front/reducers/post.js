@@ -12,7 +12,6 @@ const openNotification = (msg) => {
 export const postSlice = createSlice({
   name: "post",
   initialState : {
-    baseURL:"http://localhost:3010",
     mainPosts: [],
     imagePaths: [],
     saveFileList: [],

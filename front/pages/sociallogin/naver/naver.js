@@ -1,10 +1,11 @@
 
 
 const SocialNaver = () => {
+    const url = process.env.NEXT_PUBLIC_NODE_SERVER;
 
     return (
         <>
-            <a id="naver" href="http://localhost:3010/user/social/naver/login" className="naver_img" ></a>
+            <a id="naver" href={`${url}/user/social/naver/login`} className="naver_img" ></a>
         </>
     )
 }

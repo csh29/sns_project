@@ -3,7 +3,7 @@ import userSaga from './userSaga';
 import postSaga from './postSaga';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:3010';
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_NODE_SERVER;
 axios.defaults.withCredentials = true;
 
 

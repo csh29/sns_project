@@ -1,9 +1,7 @@
-import React, { useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import PostImageZoom from './ImagesZoom';
-import { useSelector } from 'react-redux';
 
 const PlusOutlinedWrapper = styled.div`
     display: inline-block;
@@ -16,7 +14,7 @@ const DivWrapper = styled.div`
 `
 
 const PostImages = ({images}) => {
-    const baseURL = useSelector((state) => state.post.baseURL)    
+    const baseURL = process.env.NEXT_PUBLIC_NODE_SERVER;
     const [ zoom , setZoom ] = useState(false);
     const imglen = images.length 
 

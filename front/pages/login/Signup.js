@@ -1,6 +1,6 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Head from 'next/head';
-import { Form, Input, Checkbox, Button, notification } from 'antd';
+import { Form, Input, Button, notification } from 'antd';
 import Layout from '../components/Layout'
 import { useDispatch, useSelector } from 'react-redux';
 import { userAction } from '../../reducers/user'; 

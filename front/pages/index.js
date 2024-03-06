@@ -1,5 +1,4 @@
 import Layout from './components/Layout'
-import PostForm from './main/PostForm';
 import PostCard from './main/PostCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';

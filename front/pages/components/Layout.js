@@ -4,8 +4,7 @@ import LoginForm from "../login/LoginForm";
 import UserInfo from "../main/UserInfo";
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { useCallback, useEffect } from 'react';
-import { userAction } from '../../reducers/user';
+import { useCallback, useEffect, useState } from 'react';
 import { postAction } from '../../reducers/post';
 
 const DivWrapper = styled.div`
@@ -19,17 +18,22 @@ const DivWrapper = styled.div`
     
 `
 
+const LinkWrapper = styled.a`
+    color: var(--color-primary) !important;
+`
 
   
 
 const Layout = ({children,darkModeHandler}) => {
     const { isLogin , user , searchHashTagLoading } = useSelector((state) => state.user);
+    const [defaultChecked,setDefaultChecked] = useState(false);
     const dispatch = useDispatch();
-    let defaultChecked = false;
+    
     useEffect(() => {
         if(typeof window !== 'undefined') {
-            defaultChecked = sessionStorage.getItem("isDarkMode") === 'true' ? true : false;
-            if (defaultChecked) {
+            const isDarkMode = sessionStorage.getItem("isDarkMode") === 'true' ? true : false;
+            setDefaultChecked(isDarkMode)
+            if (isDarkMode) {
                 document.body.setAttribute("data-theme", "dark");
             } else {
                 document.body.setAttribute("data-theme", "light");
@@ -43,31 +47,45 @@ const Layout = ({children,darkModeHandler}) => {
     }, [])
 
     
-    const menuItems = [
-        {
-        label: <Link href="/"><a>Home</a></Link>,
-        key: "home",
-        },
-        {
-        label: <Link href={`/profile`}><a>Profile</a></Link>,
-        key: "profile",
-        },
-        {
-        label: <Input.Search loading={searchHashTagLoading} onSearch={searchHashTag} placeholder='해시태그' enterButton style={{ verticalAlign: 'middle' }} />,
-        key: "mail",
-        },
-        {
-        label:   defaultChecked ? <Switch onChange={darkModeHandler} defaultChecked></Switch> : <Switch onChange={darkModeHandler}></Switch>,
-        key: "colorMode",
-        }
-    ];
+    const MenuComponent = ({defaultChecked}) => {
+        const menuItems = [
+            {
+                label: <Link href="/"><LinkWrapper>Home</LinkWrapper></Link>,
+                key: "home",
+            },
+            {
+                label: <Link href={`/profile`}><LinkWrapper>Profile</LinkWrapper></Link>,
+                key: "profile",
+            },
+            {
+                label: <Input.Search loading={searchHashTagLoading} onSearch={searchHashTag} placeholder='해시태그' enterButton style={{ verticalAlign: 'middle' }} />,
+                key: "mail",
+            },
+        ];
 
-    
+        if(defaultChecked) {
+            menuItems.push({
+                label:   <Switch onChange={darkModeHandler} defaultChecked></Switch>,
+                key: "colorMode",
+            })
+        } else {
+            menuItems.push({
+                label: <Switch onChange={darkModeHandler}></Switch>,
+                key: "colorMode",
+            })
+        }
+
+        return <Menu mode="horizontal" items={menuItems}></Menu>
+        
+    }
+
+
     return (
         <DivWrapper>
-            <Menu mode="horizontal" items={menuItems}>
+
+            <MenuComponent defaultChecked={defaultChecked}/>
                 
-            </Menu>
+            
             <Row gutter={8}>
                 <Col xs={24} md={6}>
                 {!isLogin ? <LoginForm /> : <UserInfo user={user}/>}

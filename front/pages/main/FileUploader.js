@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import { CloseCircleFilled } from '@ant-design/icons';
 
 import {useDropzone} from 'react-dropzone';
@@ -73,7 +73,8 @@ const FileUploader = ({removeImage}) => {
   const removeFileListLoading = useSelector((state) => state.post.removeFileListLoading);
   const [files, setFiles] = useState([]);
   const [per, setPer] = useState(0);
-  const { saveFileList , baseURL } = useSelector((state) => state.post);
+  const { saveFileList } = useSelector((state) => state.post);
+  const baseURL = process.env.NEXT_PUBLIC_NODE_SERVER;
 
   const {getRootProps, getInputProps} = useDropzone({
     accept: {

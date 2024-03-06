@@ -1,5 +1,5 @@
-import { Card, Button, Avatar, Popover, List, Comment, Input} from 'antd';
-import { RetweetOutlined, HeartTwoTone, HeartOutlined, MessageOutlined, EllipsisOutlined, HeartFilled } from '@ant-design/icons';
+import { Card, Button, Avatar, Popover, List, Comment} from 'antd';
+import { RetweetOutlined, HeartOutlined, MessageOutlined, EllipsisOutlined, HeartFilled } from '@ant-design/icons';
 import React, { useState, useCallback, useRef } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import PostImages from './PostImages'
