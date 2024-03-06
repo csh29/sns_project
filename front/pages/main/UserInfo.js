@@ -46,7 +46,7 @@ const UserInfo = () => {
         modalRef.current.setIsModalOpen(true);
     },[])
 
-    const SocialLogout = () => {
+    const SocialLogout = useCallback(() => {
         const kakaoLogoutURL=process.env.NEXT_PUBLIC_KAKAO_LOGOUT_URL;
         const kakaoClientId=process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID;
         const kakaoRedirectURL=process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URL;
@@ -57,7 +57,7 @@ const UserInfo = () => {
         if(user.provider === 'kakao') {
             return <a ref={aRef} style={style} href={`${kakaoLogoutURL}?client_id=${kakaoClientId}&logout_redirect_uri=${kakaoRedirectURL}&state=logout`} ></a>
         }
-    }
+    },[])
     
 
     return (
