@@ -4,7 +4,7 @@
     --color-button: #3d486c;
     --color-paragraph: #797979;
     --color-button-text: rgb(255, 255, 255);
-    --color-background: #fff;
+    --color-background: rgb(248, 249, 250);
     --color-hover: #1890ff;
     --color-anchor: #000aff;
     --antd-color : rgba(0, 0, 0, 0.45);
@@ -17,7 +17,7 @@
     --color-button: #00ff4c;
     --color-paragraph: #8a8a8a;
     --color-button-text: rgb(0, 0, 0);
-    --color-background: #000;
+    --color-background: rgb(18, 18, 18);
     --antd-color : white;
     --background-naver-image: url('../sociallogin/naver/btnD_완성형.png');
   }
@@ -34,14 +34,19 @@
   body , ul , div:not(.img_overlay *,.ant-switch-handle, .ant-card-bordered *, .dropzone , .progress *){
     background-color: var(--color-background) !important;
     color: var(--color-primary) !important;
-    transition: background 0.3s ease;
+    transition-property: color, background;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
   }
 
   .ant-card-meta-detail * , .userinfo_css{
     color: var(--color-primary) !important;
   }
 
-  .ant-card-body {background: var(--color-background) !important; }
+  .ant-card-body {
+    background: var(--color-background) !important; 
+    transition: background 0.5s ease;
+  }
   
   .antd_icon:hover ,.userinfo_css:hover{color: var(--color-hover) !important; }
 
@@ -76,4 +81,66 @@
     background-size: 100%;
     background-repeat: no-repeat;
     border-radius: 6px;
+    transition: background-image 0.5s ease;
   }
+
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+  }
+  
+  .container > p {
+    font-size: 1rem;
+  }
+  
+  .container > em {
+    font-size: .8rem;
+  }
+  
+  .dropzone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-width: 2px;
+    border-radius: 2px;
+    border-color: #eeeeee;
+    border-style: dashed;
+    background-color: #fafafa;
+    color: #bdbdbd;
+    outline: none;
+    transition: border .24s ease-in-out;
+  }
+  
+  .dropzone:focus { border-color: #2196f3; }
+  .dropzone.disabled { opacity: 0.6; }
+
+  .thumbs-container {
+    height: 110px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  .close-btn { position:relative; cursor:pointer; bottom: 75%; left: 3%; }
+
+  .thumb {
+    display: inline-flex;
+    border-radius: 2;
+    border: 1px solid #eaeaea;
+    margin-bottom: 8;
+    margin-right: 8;
+    width: 120px;
+    height: 100px;
+    padding: 4;
+    box-sizing: border-box;
+    min-width: 0;
+  }
+  
+  .thumb-inner { display: flex; min-width: 0; overflow: hidden; }
+  .thumb-inner-img { display: block; width: 'auto'; height: '100%'; }

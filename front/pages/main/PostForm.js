@@ -5,8 +5,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from "react-redux";
 import { postAction } from '../../reducers/post';
 import { useCallback } from 'react';
-import FileUploader from './FileUploader';
-import { ModalComponent } from '../components/Component'
+import { ModalComponent , FileUploader } from '../components/Component'
 
 const PostForm = ({modalRef,propsValue,propsOnChange,post,isNew}) => {
     const dispatch = useDispatch();

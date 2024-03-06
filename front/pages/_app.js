@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import 'antd/dist/antd.css';
 import wrapper from '../store/configureStore';
 import './styles/globals.css'
-import './fileUploader.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const NodeBird = ({ Component }) => {
