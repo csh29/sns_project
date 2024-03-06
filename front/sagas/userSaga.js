@@ -24,12 +24,12 @@ function* logIn(action) {
 }
 
 function logoutAPI(data) {
-  return axios.post("/user/logout");
+  return axios.post("/user/logout",data);
 }
 
 function* logout(action) {
   try {
-      const result = yield call(logoutAPI);
+      const result = yield call(logoutAPI,action.payload);
       yield put({
         type: userAction.logoutSuccess,
         data: action.payload,

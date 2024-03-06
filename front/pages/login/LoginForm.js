@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect } from 'react';
 import { userAction } from '../../reducers/user'
 import SocialKakao from '../sociallogin/kakao/kakao';
+import SocialNaver from '../sociallogin/naver/naver';
 
 const DivWrapper = styled.div`
     margin-top : 10px;
@@ -46,6 +47,7 @@ const LoginForm = () => {
                 <Link href="/login/Signup"><ButtonWrapper >회원가입</ButtonWrapper></Link>
                 <Divider>or</Divider>
                 <SocialKakao/>
+                <SocialNaver/>
             </DivWrapper>            
         </Form>
             

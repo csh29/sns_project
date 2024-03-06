@@ -8,11 +8,11 @@ import PostForm from './PostForm';
 import { postAction } from '../../reducers/post';
 import { useRouter } from 'next/router';
 
-const clientId = '30f0f673e02dd45bc7b95d201a90e033'
-const redirectURI = 'http://localhost:3000';
 const ButtonWrapper = styled(Button)`
     top: 10px;
 `
+
+
 
 const UserInfo = () => {
     const aRef = useRef();
@@ -21,10 +21,13 @@ const UserInfo = () => {
     const { user , logoutLoading } = useSelector((state) => state.user);
 
     const onLogout = () => {
-        if(user.sociallogin === 'Y') {
+        if(user.provider === 'kakao') {
             aRef.current.click()
         } else {
-            dispatch(userAction.logoutRequest())
+            const data = {
+                provider : user.provider
+            }
+            dispatch(userAction.logoutRequest(data))
         }
     }
 
@@ -42,6 +45,20 @@ const UserInfo = () => {
         dispatch(postAction.setSaveFileList([]))
         modalRef.current.setIsModalOpen(true);
     },[])
+
+    const SocialLogout = () => {
+        const kakaoLogoutURL=process.env.NEXT_PUBLIC_KAKAO_LOGOUT_URL;
+        const kakaoClientId=process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID;
+        const kakaoRedirectURL=process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URL;
+    
+        const style = {display:'none'};
+    
+    
+        if(user.provider === 'kakao') {
+            return <a ref={aRef} style={style} href={`${kakaoLogoutURL}?client_id=${kakaoClientId}&logout_redirect_uri=${kakaoRedirectURL}&state=logout`} ></a>
+        }
+    }
+    
 
     return (
         <>
@@ -63,7 +80,7 @@ const UserInfo = () => {
 
             <PostForm modalRef={modalRef}/>
 
-            <a ref={aRef} style={{display:'none'}} href={`https://kauth.kakao.com/oauth/logout?client_id=${clientId}&logout_redirect_uri=${redirectURI}&state=logout`} ></a>
+            <SocialLogout/>
         </>
             
         

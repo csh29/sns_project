@@ -18,7 +18,7 @@ module.exports = class User extends Model {
         type: DataTypes.STRING(100),
         allowNull: true,
       },
-      kakaoId: {
+      socialId: {
         type: DataTypes.STRING(100),
         allowNull: true,
       },
@@ -26,10 +26,13 @@ module.exports = class User extends Model {
         type: DataTypes.STRING(500),
         allowNull: true,
       },
-      sociallogin: {
-        type: DataTypes.STRING(1),
-        allowNull: false,
-        defaultValue: 'Y'
+      provider: {
+        type: DataTypes.STRING(10),
+        allowNull: true,
+      },
+      accessToken: {
+        type: DataTypes.STRING(100),
+        allowNull: true,
       },
       
       

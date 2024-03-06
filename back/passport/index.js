@@ -1,6 +1,7 @@
 const passport = require('passport');
 const local = require('./local');
 const kakao = require('./kakao');
+const naver = require('./naver');
 const { User } = require('../models');
 
 module.exports = () => {
@@ -21,6 +22,7 @@ module.exports = () => {
 
   local();
   kakao();
+  naver()
 };
 
 // 프론트에서 서버로는 cookie만 보내요(clhxy)

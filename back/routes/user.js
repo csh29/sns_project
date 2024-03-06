@@ -48,9 +48,14 @@ router.post("/follow",isLoggedIn, async (req,res,next) => {
 })
 
 router.post("/logout",async(req,res,next) => {
-  const ACCESS_TOKEN = req.user?.accessToken;
-  if(ACCESS_TOKEN) {
-    //await axios.post(process.env.KAKAO_LOGOUT_URL ,{},{ headers:{'Authorization': `Bearer ${ACCESS_TOKEN}`} });
+  if(req.body.provider === 'naver') {
+    const client_id = process.env.NAVER_CLIENT_ID;
+    const client_secret = process.env.NAVER_CLIENT_SECRET;
+    const access_token = req.user?.accessToken;
+    const logoutUrl = "https://nid.naver.com/oauth2.0/token?grant_type=delete";
+
+    const result = await axios.get(`${logoutUrl}&client_id=${client_id}&client_secret=${client_secret}&access_token=${access_token}&service_provider=NAVER`);
+    
   }
 
   req.logout();
@@ -115,9 +120,23 @@ router.post("/signup",isNotLoggedIn,async (req, res, next) => {
 
 })
 
+router.get('/social/naver/login', passport.authenticate('naver'));
+
+router.get('/naver/callback', passport.authenticate('naver', {
+    failureRedirect: '/',
+}), (req, res) => {
+  return req.login(req.user, async (loginErr) => {
+    if (loginErr) {
+      console.error(loginErr);
+      return next(loginErr);
+    }
+    res.redirect('http://localhost:3000/');
+  });
+});
 
 
-router.get('/social/login',passport.authenticate('kakao'));
+
+router.get('/social/kakao/login',passport.authenticate('kakao'));
 
 router.get('/kakao/callback',
   passport.authenticate('kakao', {

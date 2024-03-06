@@ -4,7 +4,7 @@ const SocialKakao = () => {
 
     return(
         <>
-            <a id="kakao" href="http://localhost:3010/user/social/login" className="kakao_img"></a>
+            <a id="kakao" href="http://localhost:3010/user/social/kakao/login" className="kakao_img"></a>
         </>
     )
 }

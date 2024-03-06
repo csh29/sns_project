@@ -8,6 +8,7 @@
     --color-hover: #1890ff;
     --color-anchor: #000aff;
     --antd-color : rgba(0, 0, 0, 0.45);
+    --background-naver-image: url('../sociallogin/naver/btnG_완성형.png');
   }
   
   [data-theme='dark'] {
@@ -18,6 +19,7 @@
     --color-button-text: rgb(0, 0, 0);
     --color-background: #000;
     --antd-color : white;
+    --background-naver-image: url('../sociallogin/naver/btnD_완성형.png');
   }
   
   *{
@@ -64,4 +66,14 @@
     height: 45px;
     border: none;
     background-image: url('../sociallogin/kakao/kakao_login_medium_narrow.png');
+  }
+
+  .naver_img {
+    width: 183px;
+    height: 45px;
+    margin-top: 5px;
+    background-image: var(--background-naver-image); 
+    background-size: 100%;
+    background-repeat: no-repeat;
+    border-radius: 6px;
   }

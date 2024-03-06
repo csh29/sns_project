@@ -24,19 +24,22 @@ module.exports = () => {
                     const newUser = await User.create({                    
                         email: profile.displayName+"_kakao",
                         nickname: profile.displayName,
-                        kakaoId: hashedPassword,
-                        profileImageUrl: profileImage
+                        socialId: hashedPassword,
+                        profileImageUrl: profileImage,
+                        accessToken:accessToken,
+                        provider: 'kakao'
                     });
                     const data = { user:newUser ,  accessToken}
                     done(null, data)
                 } else {
-                    const result = await bcrypt.compare(profile.id+'', exUser.kakaoId);
+                    const result = await bcrypt.compare(profile.id+'', exUser.socialId);
     
                     if(result) {
                         await User.update({
-                            profileImageUrl: profileImage
+                            profileImageUrl: profileImage,
+                            accessToken:accessToken
                         },{
-                            where: {kakaoId: exUser.kakaoId}
+                            where: {socialId: exUser.socialId}
                         })
                         const data = { user:exUser ,  accessToken}
                         done(null, data)
