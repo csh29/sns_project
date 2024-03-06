@@ -19,7 +19,9 @@ NextJS를 기반으로 한 SNS 애플리케이션입니다. NextJS와 nodeJS공�
 - light/dark모드
     - 흑백 모드 구현
 
+- 
 
+## 🖵 화면 예시
 
 ### 1. Login Page
 
