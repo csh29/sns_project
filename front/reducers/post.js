@@ -32,9 +32,14 @@ export const postSlice = createSlice({
       state.loadPostsLoading = true;
     },
     loadPostsSuccess: (state,action) => {
-        state.mainPosts = action.data;
-        state.loadPostsLoading = false;
+      if(action.data.payload) {
+        state.mainPosts = state.mainPosts.concat(action.data.result);
         state.hasMorePosts = action.data.length === 10;
+      } else {
+        state.mainPosts = action.data.result;
+      }
+        state.loadPostsLoading = false;
+        
     },
     loadPostsFailure: (state,action) => {
       state.loadPostsLoading = false;
@@ -60,7 +65,6 @@ export const postSlice = createSlice({
       state.addPostDone = false;
     },
     addPostSuccess: (state , action) => {
-      console.log(action.data)
       state.mainPosts.unshift(action.data)
       state.addPostLoading = false;
       state.addPostDone = true;

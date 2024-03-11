@@ -15,7 +15,7 @@ function* loadPosts(action) {
         const result = yield call(loadPostsAPI,action.payload);
         yield put({
           type: postAction.loadPostsSuccess,
-          data: result.data,
+          data: { result : result.data , payload : action.payload},
         });
     } catch (err) {
         console.error(err);

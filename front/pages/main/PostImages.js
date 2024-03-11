@@ -35,7 +35,7 @@ const PostImages = ({images}) => {
     } else {
         return (
             <DivWrapper>
-                <img role="presentation" width={"50%"} style={{marginLeft:'1px', marginRight:'-1px'}} src={baseURL+images[0].src} alt={images[0].src} onClick={onZoom} />
+                <img role="presentation" height={"400px"} width={"50%"} style={{marginLeft:'1px', marginRight:'-1px'}} src={baseURL+images[0].src} alt={images[0].src} onClick={onZoom} />
                 
                     { imglen > 2 
                     ?   
@@ -45,7 +45,7 @@ const PostImages = ({images}) => {
                             {imglen-1}개의 사진 더보기
                         </PlusOutlinedWrapper> 
                     : 
-                    <img role="presentation" width={"50%"} src={baseURL+images[1].src} alt={images[1].src} onClick={onZoom} />
+                    <img role="presentation" height={"400px"} width={"50%"} src={baseURL+images[1].src} alt={images[1].src} onClick={onZoom} />
                     }
                 {
                     zoom 

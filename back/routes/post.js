@@ -197,7 +197,6 @@ router.get("/", async (req,res,next) => {
   try{
 
     const where = {};
-
     if (parseInt(req.query.lastId, 10)) {
       where.id = { [Op.lt]: parseInt(req.query.lastId, 10)}
     }

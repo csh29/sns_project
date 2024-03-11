@@ -26,7 +26,12 @@ const upload = multer({
       })
 
       findImages.forEach(img => {
-        fs.unlinkSync("./upload/" + img.filename);
+        try{
+          fs.unlinkSync("./upload/" + img.filename);
+        }catch(err) {
+          
+        }
+        
         Image.destroy({
           where : {
             PostId: req.params.postId
