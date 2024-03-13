@@ -8,6 +8,7 @@ const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 require("dotenv").config();
+require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
 
 router.post("/updatenickname", isLoggedIn , async (req,res,next) => {
   try{
@@ -130,7 +131,7 @@ router.get('/naver/callback', passport.authenticate('naver', {
       console.error(loginErr);
       return next(loginErr);
     }
-    res.redirect('http://localhost:3000/');
+    res.redirect(process.env.NEXT_APP);
   });
 });
 
@@ -150,7 +151,7 @@ router.get('/kakao/callback',
         return next(loginErr);
       }
       
-      res.redirect('http://localhost:3000/');
+      res.redirect(process.env.NEXT_APP);
     });
 
   },
