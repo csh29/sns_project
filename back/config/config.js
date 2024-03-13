@@ -5,24 +5,24 @@ dotenv.config({ path: `.env.${process.env.NODE_ENV}` })
 
 module.exports = {
     local: {
-        username:'root',
+        username:process.env.DB_USER_NAME,
         password:process.env.DB_PASSWORD,
-        database:'Mysql',
-        host:'127.0.0.1',
+        database:process.env.DATABASE_NAME,
+        host:process.env.DB_HOST,
         dialect: 'mysql',
     }, 
     development: {
-        username:'root',
+        username:process.env.DB_USER_NAME,
         password:process.env.DB_PASSWORD,
-        database:'Mysql',
+        database:process.env.DATABASE_NAME,
         host:process.env.DB_HOST,
         dialect: 'mysql',
     },
     production: {
-        username:'root',
+        username:process.env.DB_USER_NAME,
         password:process.env.DB_PASSWORD,
-        database:'Mysql',
-        host:'adsads',
+        database:process.env.DATABASE_NAME,
+        host:process.env.DB_HOST,
         dialect: 'mysql',
     }
 };

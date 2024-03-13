@@ -16,6 +16,8 @@ const passportConfig = require('./passport');
 const port = process.env.APP_PORT || 3010;
 
 dotenv.config();
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` })
+
 const app = express();
 db.sequelize.sync()
   .then(() => {
@@ -26,7 +28,7 @@ passportConfig();
 
 app.use(morgan('dev'));
 app.use(cors({
-  origin: `http://localhost:3000`,
+  origin: process.env.NEXT_APP,
   credentials: true,
 }));
 app.use('/', express.static(path.join(__dirname, 'uploads')));
