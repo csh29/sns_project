@@ -107,7 +107,7 @@ const PostCard = ({post , followings}) => {
             <Card
                 title={post.Retweet ? post.User.nickname+'님이 리트윗 하셨습니다.' : ''}
                 extra={id && <FollowButton followings={followings} post={post} />}
-                cover={post.Images && post.Images[0] && <PostImages images={post.Images} />}
+                cover={post.Images && post.Images[0] ? <PostImages images={post.Images} /> : ''}
                 actions={[
                     <RetweetOutlined onClick={retweet} className="antd_icon" key="retweet" />,
                     liked 
@@ -136,7 +136,7 @@ const PostCard = ({post , followings}) => {
                 {
                     post.Retweet ? 
                     <Card
-                        cover={post.Retweet.Images && <PostImages images={post.Retweet.Images} />}
+                        cover={post.Retweet.Images && post.Retweet.Images[0] ? <PostImages images={post.Retweet.Images} /> : ''}
                     >
                         <Card.Meta
                             avatar={ <DropdownAvatar user={post.Retweet.User}/> }
