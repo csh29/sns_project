@@ -10,6 +10,7 @@ const fs = require('fs');
 const postRouter = require('./routes/post');
 const userRouter = require('./routes/user');
 const uploadRouter = require('./routes/upload');
+const notificationRouter = require('./routes/notification');
 const db = require('./models');
 const passportConfig = require('./passport');
 
@@ -51,6 +52,7 @@ app.get('/', (req, res) => {
 app.use('/post', postRouter);
 app.use('/user', userRouter);
 app.use('/upload', uploadRouter);
+app.use('/notification', notificationRouter);
 
 app.get('/upload/:filename',(req,res) => {
   const filename = req.params.filename;

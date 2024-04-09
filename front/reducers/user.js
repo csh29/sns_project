@@ -93,7 +93,12 @@ export const userSlice = createSlice({
       },
       followSuccess: (state,action) => {
         if(action.data.type === 'follow') {
-          state.user.Followings.push({id:action.data.UserId})
+          const data = {
+            id:action.data.UserId,
+            nickname:action.data.nickname,
+            email:action.data.email
+          }
+          state.user.Followings.push(data);
         } else if(action.data.type === 'unFollow') {
           state.user.Followings = state.user.Followings.filter(v => v.id !== action.data.UserId)
         }

@@ -31,7 +31,7 @@
     color: var(--color-primary);
   }
   
-  body , ul , div:not(.img_overlay *,.ant-switch-handle, .ant-card-bordered *, .dropzone , .progress *){
+  body , ul , div:not(.img_overlay *,.ant-switch-handle, .ant-card-bordered *, .dropzone , .progress * ,#listDivWrapper,#listDivWrapper *,.color-ignore){
     background-color: var(--color-background) !important;
     color: var(--color-primary) !important;
     transition-property: color, background;
@@ -144,3 +144,7 @@
   
   .thumb-inner { display: flex; min-width: 0; overflow: hidden; }
   .thumb-inner-img { display: block; width: 'auto'; height: '100%'; }
+
+  .mention-list-hover { background-color: #eaeaea; }
+
+  .comment-editor { font-weight: bold; color: 'rgb(0, 55, 107)';}

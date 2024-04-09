@@ -186,7 +186,7 @@ router.post("/comment", async (req,res,next) => {
         attributes: ['id', 'nickname', 'profileImageUrl'],
       }]
     })
-    
+
     res.status(201).json(resultComment)
   }catch(err) {
     console.log(err);

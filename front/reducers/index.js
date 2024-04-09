@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 
 import { user } from './user';
 import { post } from './post';
+import { noti } from './notification';
 
 const rootReducer = combineReducers({
   index: (state = {}, action) => {
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   },
   user,
   post,
+  noti,
 });
 
 export default rootReducer;

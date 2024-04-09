@@ -166,9 +166,10 @@ const PostCard = ({post , followings}) => {
                                 avatar={ <DropdownAvatar user={item.User}/> }
                                 title={item.User.nickname}
                                 description={
-                                    <Comment
-                                        content={item.content}
-                                    />
+                                    <div dangerouslySetInnerHTML={{__html:item.content}}></div>
+                                    // <Comment 
+                                    //     content={item.content}
+                                    // />
                                 }
                             />
                         </List.Item>

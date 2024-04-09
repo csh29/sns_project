@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useCallback, useEffect, useRef } from 'react';
 import PostForm from './PostForm';
 import { postAction } from '../../reducers/post';
+import { notiAction } from '../../reducers/notification';
 import { useRouter } from 'next/router';
 
 const ButtonWrapper = styled(Button)`
@@ -29,6 +30,7 @@ const UserInfo = () => {
             }
             dispatch(userAction.logoutRequest(data))
         }
+        
     }
 
     useEffect(() => {
@@ -36,6 +38,7 @@ const UserInfo = () => {
         if(state) {
             dispatch(userAction.logoutRequest());
             router.push('/');
+            dispatch(notiAction.logoutRequest())
         }
     },[])
     

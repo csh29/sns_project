@@ -1,4 +1,4 @@
-import { Menu,  Input, Col, Row, Switch  } from 'antd';
+import { Menu,  Input, Col, Row, Switch, Badge  } from 'antd';
 import Link from 'next/link';
 import LoginForm from "../login/LoginForm";
 import UserInfo from "../main/UserInfo";
@@ -6,6 +6,9 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
 import { postAction } from '../../reducers/post';
+import { NotificationOutlined } from '@ant-design/icons';
+import { NotisMenu } from '../components/Component'
+import { notiAction } from '../../reducers/notification';
 
 const DivWrapper = styled.div`
     width: 99%;
@@ -26,9 +29,10 @@ const LinkWrapper = styled.a`
 
 const Layout = ({children,darkModeHandler}) => {
     const { isLogin , user , searchHashTagLoading } = useSelector((state) => state.user);
+    const { notisData } = useSelector((state) => state.noti);
     const [defaultChecked,setDefaultChecked] = useState(false);
     const dispatch = useDispatch();
-    
+
     useEffect(() => {
         if(typeof window !== 'undefined') {
             const isDarkMode = sessionStorage.getItem("isDarkMode") === 'true' ? true : false;
@@ -39,14 +43,35 @@ const Layout = ({children,darkModeHandler}) => {
                 document.body.setAttribute("data-theme", "light");
             }
         }
+
     }, []);
+
+    useEffect(() => {
+        const eventSource = new EventSource(`${process.env.NEXT_PUBLIC_NODE_SERVER}/notification/load`,
+        {
+          withCredentials: true,
+          Accept: 'text/event-stream',
+          'Content-Type': 'text/event-stream; charset=utf-8'
+        }
+       );
+
+  
+      eventSource.addEventListener('message', (event) => {
+        const data = JSON.parse(event.data);
+        dispatch(notiAction.setNotisData(data));
+      });
+  
+      return () => {
+        eventSource.close()
+      }
+    },[isLogin])
 
     const searchHashTag = useCallback((hashtag) => {
         const data = {hashtag}
         dispatch(postAction.postByHashTagRequest(data));
     }, [])
 
-    
+    console.log(notisData)
     const MenuComponent = ({defaultChecked}) => {
         const menuItems = [
             {
@@ -60,6 +85,11 @@ const Layout = ({children,darkModeHandler}) => {
             {
                 label: <Input.Search loading={searchHashTagLoading} onSearch={searchHashTag} placeholder='해시태그' enterButton style={{ verticalAlign: 'middle' }} />,
                 key: "mail",
+            },
+            {
+                
+                label: <NotisMenu data={notisData}><Badge count={notisData.length}><NotificationOutlined style={{fontSize:'18px',marginRight:'5px'}}/></Badge></NotisMenu>,
+                key: "notification",
             },
         ];
 

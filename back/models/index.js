@@ -4,6 +4,7 @@ const hashtag = require('./hashtag');
 const image = require('./image');
 const post = require('./post');
 const user = require('./user');
+const notification = require('./notification');
 
 const config = require('../config/config')[process.env.NODE_ENV];
 const db = {};
@@ -15,6 +16,7 @@ db.Hashtag = hashtag;
 db.Image = image;
 db.Post = post;
 db.User = user;
+db.Notification = notification;
 
 Object.keys(db).forEach(modelName => {
   db[modelName].init(sequelize);

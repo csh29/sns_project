@@ -41,7 +41,7 @@ router.post("/follow",isLoggedIn, async (req,res,next) => {
     } else if(req.body.type === 'unFollow'){
       await user.removeFollowers(req.user.id);
     }
-    res.status(200).json({ UserId: parseInt(req.body.targetId, 10) , type:req.body.type });    
+    res.status(200).json({ UserId: parseInt(req.body.targetId, 10),nickname:req.user.nickname , type:req.body.type });    
   } catch(err) {
     console.log(err);
     next(err)
@@ -78,11 +78,11 @@ router.get("/",async (req,res,next) => {
         }, {
           model: User,
           as: 'Followings',
-          attributes: ['id','nickname'],
+          attributes: ['id','nickname','profileImageUrl','profileImageUrl','email'],
         }, {
           model: User,
           as: 'Followers',
-          attributes: ['id','nickname'],
+          attributes: ['id','nickname','profileImageUrl','profileImageUrl','email'],
         }]
       })
       res.status(200).json(findUser);
@@ -185,11 +185,11 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
         }, {
           model: User,
           as: 'Followings',
-          attributes: ['id','nickname'],
+          attributes: ['id','nickname','profileImageUrl','email'],
         }, {
           model: User,
           as: 'Followers',
-          attributes: ['id','nickname'],
+          attributes: ['id','nickname','profileImageUrl','email'],
         }]
       })
       return res.status(200).json(fullUserWithoutPassword);

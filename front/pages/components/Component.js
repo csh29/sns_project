@@ -7,6 +7,7 @@ import { userAction } from '../../reducers/user';
 import { CloseCircleFilled } from '@ant-design/icons';
 import {useDropzone} from 'react-dropzone';
 import { postAction } from '../../reducers/post';
+import { notiAction } from '../../reducers/notification';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
 const InputWrapper = styled(Input)`
@@ -18,6 +19,31 @@ const LabelWrapper = styled.label`
   color: var(--color-primary) !important;
   transition: color 0.3s ease;
 `
+
+const NotisMenu = ({children,data}) => {
+  const dispatch = useDispatch();
+  const items = [];
+
+  for (const v of data) {
+    const html =  `${v.User.nickname}님이 언급하셨습니다. <br/>  ${v.content}` 
+    items.push({
+        label: (<div dangerouslySetInnerHTML={{ __html:html}}></div>),
+        key: v.id,
+        onClick:()=>{ dispatch(notiAction.receptionRequest({id:v.id})) }
+      })
+    items.push({
+        type: 'divider',
+    })
+  }
+
+  return (
+      <Dropdown menu={{ items }} trigger={['click']}>
+          <Space>
+              {children}
+          </Space>
+      </Dropdown>
+  )
+}
 
 const ContextMenu = ({children,user,followings}) => {
     const dispatch = useDispatch();
@@ -188,4 +214,4 @@ const FileUploader = ({removeImage}) => {
       )
   }
 
-export {ModalComponent,TextComponent,ContextMenu,FileUploader};
+export {ModalComponent,TextComponent,ContextMenu,FileUploader,NotisMenu};

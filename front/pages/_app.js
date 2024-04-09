@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const NodeBird = ({ Component }) => {
 
+  
   const darkModeHandler = () => {
     const isDarkMode = sessionStorage.getItem("isDarkMode") === 'true' ? false : true;
     if (isDarkMode) {
@@ -20,7 +21,7 @@ const NodeBird = ({ Component }) => {
   return (
     <>
       <Head>
-        <title>NodeBird</title>
+        <title>NEXT-SNS</title>
       </Head>
       <Component darkModeHandler={darkModeHandler}/>
     </>
