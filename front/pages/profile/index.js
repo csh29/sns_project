@@ -32,7 +32,7 @@ const Profile = ({darkModeHandler}) => {
                 </Head>
                 <NicknameEditForm/>
                 <FollowList
-                    header="팔로우 목록"
+                    header="팔로워 목록"
                     data={Followers}
                 />
                 <FollowList

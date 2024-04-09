@@ -41,7 +41,7 @@ router.post("/follow",isLoggedIn, async (req,res,next) => {
     } else if(req.body.type === 'unFollow'){
       await user.removeFollowers(req.user.id);
     }
-    res.status(200).json({ UserId: parseInt(req.body.targetId, 10),nickname:req.user.nickname , type:req.body.type });    
+    res.status(200).json({ UserId: parseInt(req.body.targetId, 10),nickname: user.nickname , type:req.body.type });    
   } catch(err) {
     console.log(err);
     next(err)

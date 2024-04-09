@@ -71,7 +71,6 @@ const Layout = ({children,darkModeHandler}) => {
         dispatch(postAction.postByHashTagRequest(data));
     }, [])
 
-    console.log(notisData)
     const MenuComponent = ({defaultChecked}) => {
         const menuItems = [
             {

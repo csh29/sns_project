@@ -117,16 +117,31 @@ const ModalComponent = forwardRef((props, ref) => {
     },[]);
     
 
-    return (
+    if(props.footer) {
+      return (
+        <Modal 
+            title={props.title}
+            open={isModalOpen} 
+            footer={props.footer}
+            onCancel={props.handleCancel ? props.handleCancel : handleCancel}
+            >
+            {props.children}
+        </Modal>
+    )
+    } else {
+      return (
         <Modal 
             title={props.title}
             open={isModalOpen} 
             onOk={props.handleOk} 
             onCancel={props.handleCancel ? props.handleCancel : handleCancel}
-            okButtonProps={props.isLoading ? {disabled: true} : null}>
+            okButtonProps={props.isLoading ? {disabled: true} : null}
+            >
             {props.children}
         </Modal>
     )
+    }
+
 });
   
 

@@ -120,13 +120,19 @@ const CommentForm = ({post}) => {
         } else if(e.key === 'Escape') {
           const cursorNode = selection.getRangeAt(0).startContainer;
           
+          setMentionLoading(false);
+
+          if(cursorNode?.className?.indexOf('DivInput') !== -1) {
+            return false;
+          }
+
           if(cursorNode.className) {
             cursorNode.className = 'close-mention-editor'
           } else {
             cursorNode.parentNode.className = 'close-mention-editor'
           }
           
-          setMentionLoading(false);
+          
         }
 
       }, [mentionLoading]);

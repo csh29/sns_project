@@ -106,7 +106,7 @@ export const postSlice = createSlice({
     },
     likeSuccess: (state,action) => {
       const post = state.mainPosts.find(v => v.id === action.data.PostId);
-      post.Likers.push({ id: action.data.UserId });
+      post.Likers.push({ id: action.data.UserId , ...action.data });
     },
     likeFailure: (state , action) => {
       openNotification(action.error)

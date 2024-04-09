@@ -90,7 +90,9 @@ router.post("/like", async (req,res,next) => {
     }
 
     post.addLikers(req.user.id)
-    res.status(201).json({ PostId: post.id, UserId: req.user.id });
+
+    const { id:UserId , nickname , profileImageUrl } = req.user;
+    res.status(201).json({ PostId: post.id, UserId , nickname , profileImageUrl });
   }catch(err) {
     console.log(err);
     next(err);
@@ -226,7 +228,7 @@ router.get("/", async (req,res,next) => {
       }, {
         model: User, // 좋아요 누른 사람
         as: 'Likers',
-        attributes: ['id'],
+        attributes: ['id','nickname','profileImageUrl'],
       }, {
         model: Post,
         as: 'Retweet',
@@ -285,7 +287,7 @@ router.post("/addpost" , isLoggedIn, async (req,res,next) => {
       },{
         model: User, // 좋아요 누른 사람
         as: 'Likers',
-        attributes: ['id'],
+        attributes: ['id','nickname','profileImageUrl'],
       }]
     })
 
@@ -327,7 +329,7 @@ router.get("/hashtag/:hashtag",isLoggedIn, async(req,res,next) => {
       }, {
         model: User, // 좋아요 누른 사람
         as: 'Likers',
-        attributes: ['id'],
+        attributes: ['id','nickname','profileImageUrl'],
       }, {
         model: Post,
         as: 'Retweet',

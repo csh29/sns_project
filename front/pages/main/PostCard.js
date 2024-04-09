@@ -1,4 +1,4 @@
-import { Card, Button, Avatar, Popover, List, Comment} from 'antd';
+import { Card, Button, Avatar, Popover, List, Comment, Col, Row} from 'antd';
 import { RetweetOutlined, HeartOutlined, MessageOutlined, EllipsisOutlined, HeartFilled } from '@ant-design/icons';
 import React, { useState, useCallback, useRef } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
@@ -11,6 +11,7 @@ import { postAction } from '../../reducers/post';
 import FollowButton from './FollowButton';
 import { ContextMenu } from '../components/Component'
 import PostForm from './PostForm';
+import { ModalComponent } from '../components/Component'
 
 const CardWrapper = styled.div`
   margin-bottom: 20px;
@@ -22,14 +23,52 @@ export const Global = createGlobalStyle`
     border-bottom: 2px solid #f0f0f0;
   }
 `
-
+const CardMetaWrapper = styled(Card.Meta)`
+    margin-top:50px;
+    font-weight:bold;
+    cursor:pointer;
+`
 const PostCard = ({post , followings}) => {
     const modalRef = useRef();
+    const likeModalRef = useRef();
     const dispatch = useDispatch();
     const [ comment , setOpenComment ] = useState(false);
     const id = useSelector((state) => state.user.user.id);
     const liked = post.Likers?.find((v) => v.id === id);
+
+
+
+    const LikeList = useCallback(({like}) => {
+        const targetId = like.id;
+        return (
+                <Row gutter={[16, 16]} style={{paddingBottom:'30px'}}>
+                    <Col span={18} >
+                        <Card.Meta
+                            avatar={ 
+                                like.profileImageUrl ? 
+                                <Avatar src={like.profileImageUrl}></Avatar>
+                                :
+                                <Avatar>{like.nickname[0]}</Avatar>
+                            }
+                            description={like.nickname}
+                        />
+                    </Col>
+                    <Col>
+                        <FollowButton followings={followings} targetId={targetId} />
+                    </Col>
+                </Row>
+            
+        )
+    },[followings])
+
+    const handleCancel = useCallback(() => {
+        likeModalRef.current.setIsModalOpen(false);
+    },[]);
     
+
+    const openLikeList = useCallback(() => {
+        likeModalRef.current.setIsModalOpen(true);
+    }, [])
 
     const DropdownAvatar = useCallback(({user}) => {
         if(!user) return null;
@@ -106,7 +145,7 @@ const PostCard = ({post , followings}) => {
             <Global/>
             <Card
                 title={post.Retweet ? post.User.nickname+'님이 리트윗 하셨습니다.' : ''}
-                extra={id && <FollowButton followings={followings} post={post} />}
+                extra={id && <FollowButton followings={followings} targetId={post.User.id} />}
                 cover={post.Images && post.Images[0] ? <PostImages images={post.Images} /> : ''}
                 actions={[
                     <RetweetOutlined onClick={retweet} className="antd_icon" key="retweet" />,
@@ -151,6 +190,26 @@ const PostCard = ({post , followings}) => {
                         description={<PostCardContent postData={post.content} />}
                     />
                 }
+                {
+                    post.Likers.length > 0 ?
+                    (
+                        <>
+                            <CardMetaWrapper
+                                description={`좋아요 ${post.Likers.length}`}
+                                onClick={openLikeList}
+                            />
+                            <ModalComponent
+                                title="좋아요"
+                                ref={likeModalRef}
+                                footer={[<Button key={post.id} onClick={handleCancel}>닫기</Button>]}
+                            >
+                                { post.Likers.map(like => <LikeList key={like.id} like={like}/>) }
+                            </ModalComponent>
+                        </>
+                    )
+                   :
+                   null
+                }
                 
             </Card>
             {comment 
@@ -167,9 +226,6 @@ const PostCard = ({post , followings}) => {
                                 title={item.User.nickname}
                                 description={
                                     <div dangerouslySetInnerHTML={{__html:item.content}}></div>
-                                    // <Comment 
-                                    //     content={item.content}
-                                    // />
                                 }
                             />
                         </List.Item>
