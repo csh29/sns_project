@@ -96,8 +96,10 @@ router.get("/load",isLoggedIn,async(req,res,next) => {
 router.post("/",isLoggedIn,async(req,res,next) => {
     try{
         const emails = req.body.emails
-
-        for (const email of emails) {
+        const set = new Set(emails);
+        const uniqueArr = [...set];
+        for (const email of uniqueArr) {
+            
             const user = await User.findOne({where:{email}})
 
             await Notification.create({
@@ -112,7 +114,7 @@ router.post("/",isLoggedIn,async(req,res,next) => {
         
         
     } catch( err ) {
-        
+        console.log(err)
     }
 })
 

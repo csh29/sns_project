@@ -40,7 +40,10 @@ const CommentForm = ({post}) => {
     const onSubmitComment = useCallback(() => {
         const emails = []
         const nodes = document.querySelectorAll('.ant-input > span[data-email]')
-        nodes.forEach(node => emails.push(node.getAttribute('data-email')))
+        nodes.forEach(node => {
+          emails.push(node.getAttribute('data-email'))
+          node.removeAttribute('data-email')
+        })
 
         const data = { content:textAreaRef.current.innerHTML, userId: userId, postId: post.id ,nickname:nickname , emails}
         dispatch(postAction.addCommentRequest(data))
@@ -96,6 +99,9 @@ const CommentForm = ({post}) => {
 
         if(e.key.length === 1) {
           if(textValue.match(reg)) {
+            if(currentNode.className === 'ant-form-item-control-input-content') {
+              return false;
+            }
             if(!mentionLoading && currentNode.className !== 'close-mention-editor' && currentNode.className !== 'color-ignore comment-editor mention') {
               currentNode.innerText = currentNode.innerText.replace('@',"");
               const node = createSpanTag('mention');
