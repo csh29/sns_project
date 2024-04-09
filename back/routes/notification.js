@@ -104,6 +104,7 @@ router.post("/",isLoggedIn,async(req,res,next) => {
                 content:req.body.content,
                 senderId: req.user.id,
                 targetId: user.id,
+                UserId:user.id,
                 reception: 'N'
             })
         }

@@ -45,6 +45,8 @@ const CommentForm = ({post}) => {
         const data = { content:textAreaRef.current.innerHTML, userId: userId, postId: post.id ,nickname:nickname , emails}
         dispatch(postAction.addCommentRequest(data))
         dispatch(notiAction.addNotificationRequest(data))
+        textAreaRef.current.innerHTML = ''
+        setMentionLoading(false);
       }, []);
     
       useEffect(() => {
