@@ -87,17 +87,28 @@ const ContextMenu = ({children,user,followings}) => {
     )
 }
 
-const TextComponent = ({data , name}) => {
+const TextComponent = ({data , name, isPassword = false}) => {
     const { value , onChange } = data;
     return (
         <>
             <LabelWrapper>{name}</LabelWrapper>
             <br/>
-            <InputWrapper
+            {
+              isPassword ?
+              <InputWrapper
                 value={value}
                 onChange={onChange}
                 name={name}
-            />
+                type='password'
+                autoComplete='off'
+              />
+            :
+              <InputWrapper
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+              /> 
+            }
             <br/>
         </>
     )

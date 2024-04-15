@@ -41,7 +41,7 @@ const LoginForm = () => {
     return (
         <Form onFinish={onSubmitForm} style={{ padding: '10px' }}>
             <TextComponent data={emailInput} name={'이메일'}/>
-            <TextComponent data={passwordInput} name={'비밀번호'}/>
+            <TextComponent data={passwordInput} name={'비밀번호'} isPassword={true}/>
             <DivWrapper>
                 <ButtonWrapper loading={loginLoading} type="primary" htmlType="submit">로그인</ButtonWrapper>
                 <Link href="/login/Signup"><ButtonWrapper >회원가입</ButtonWrapper></Link>

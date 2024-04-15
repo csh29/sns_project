@@ -195,7 +195,16 @@ export const postSlice = createSlice({
       state.saveFileList = action.payload;
     },
 
+    removeCommentRequest: (state) => {
 
+    },
+    removeCommentSuccess: (state,action) => {
+      const findPost = state.mainPosts.find(post => post.id === action.data.PostId);
+      findPost.Comments = findPost.Comments.filter(comment => comment.id !== parseInt(action.data.commentId))
+    },
+    removeCommentFailure: (state,action) => {
+      openNotification(action.error)
+    },
     
   },
 });

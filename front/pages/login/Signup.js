@@ -59,33 +59,33 @@ const Signup = ({darkModeHandler}) => {
             </Head>
             <Form onFinish={onSubmit}>
                 <div>
-                <label htmlFor="user-email">이메일</label>
-                <br />
-                <Input name="user-email" type="email" value={emailInput.value} required onChange={emailInput.onChange} />
+                    <label htmlFor="user-email">이메일</label>
+                    <br />
+                    <Input name="user-email" type="email" value={emailInput.value} required onChange={emailInput.onChange} />
                 </div>
                 <div>
-                <label htmlFor="user-nick">닉네임</label>
-                <br />
-                <Input name="user-nick" value={nickNameInput.value} required onChange={nickNameInput.onChange} />
+                    <label htmlFor="user-nick">닉네임</label>
+                    <br />
+                    <Input name="user-nick" value={nickNameInput.value} required onChange={nickNameInput.onChange} />
                 </div>
                 <div>
-                <label htmlFor="user-password">비밀번호</label>
-                <br />
-                <Input name="user-password" type="password" value={passwordInput.value} required onChange={passwordInput.onChange} />
+                    <label htmlFor="user-password">비밀번호</label>
+                    <br />
+                    <Input name="user-password" type="password" value={passwordInput.value} required onChange={passwordInput.onChange} />
                 </div>
                 <div>
-                <label htmlFor="user-password-check">비밀번호체크</label>
-                <br />
-                <Input
-                    name="user-password-check"
-                    type="password"
-                    value={passwordCheckInput.value}
-                    required
-                    onChange={passwordCheckInput.onChange}
-                />
+                    <label htmlFor="user-password-check">비밀번호체크</label>
+                    <br />
+                    <Input
+                        name="user-password-check"
+                        type="password"
+                        value={passwordCheckInput.value}
+                        required
+                        onChange={passwordCheckInput.onChange}
+                    />
                 </div>
                 <div style={{ marginTop: 10 }}>
-                <Button loading={signupLoading} type="primary" htmlType="submit" >가입하기</Button>
+                    <Button loading={signupLoading} type="primary" htmlType="submit" >가입하기</Button>
                 </div>
             </Form>
         </Layout>

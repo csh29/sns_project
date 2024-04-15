@@ -33,10 +33,9 @@ const Main = ({darkModeHandler}) => {
           };
     }, [hasMorePosts, loadPostsLoading, mainPosts])
     
-    
     return (
         <Layout darkModeHandler={darkModeHandler}>
-            {isLogin && mainPosts ? mainPosts.map( post => <PostCard followings={followings} post={post} key={post.id}/>) : null}
+            {isLogin && Array.isArray(mainPosts) ? mainPosts.map( post => <PostCard followings={followings} post={post} key={post.id}/>) : null}
         </Layout>
     )
 }

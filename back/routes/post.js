@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const { Op } = require('sequelize');
-const { Post, Image, Comment, User, Hashtag } = require('../models');
+const { Post, Image, Comment, User, Hashtag, Notification } = require('../models');
 const { isLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -173,13 +173,29 @@ router.post("/post/:postId", async (req,res,next) => {
   }
 })
 
-router.post("/comment", async (req,res,next) => {
+router.post("/comment", isLoggedIn , async (req,res,next) => {
   try{
     const comment = await Comment.create({
       PostId: req.body.postId,
       content: req.body.content,
       UserId: req.user.id
     })
+
+    const emails = req.body.emails
+    const set = new Set(emails);
+    const uniqueArr = [...set];
+    for (const email of uniqueArr) {
+        const user = await User.findOne({where:{email}})
+
+        await Notification.create({
+          content:req.body.content,
+          senderId: req.user.id,
+          targetId: user.id,
+          commentId: comment.id,
+          UserId:req.user.id,
+          reception: 'N',
+        })
+    }
 
     const resultComment = await Comment.findOne({
       where: {id : comment.id},
@@ -192,6 +208,27 @@ router.post("/comment", async (req,res,next) => {
     res.status(201).json(resultComment)
   }catch(err) {
     console.log(err);
+  }
+})
+
+router.delete("/comment/:commentId", isLoggedIn , async(req,res,next) => {
+  try{
+    const commentId = req.params.commentId;
+
+    await Notification.destroy({
+      where : {
+        commentId
+      }
+    })
+
+    await Comment.destroy({
+      where : {
+        id: commentId
+      }
+    })
+    res.status(201).json({commentId})
+  } catch (err) {
+    console.log(err)
   }
 })
 

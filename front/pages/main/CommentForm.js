@@ -2,7 +2,6 @@ import { Button, Form, Input, notification } from 'antd';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postAction } from '../../reducers/post';
-import { notiAction } from '../../reducers/notification';
 import MentionList from './MentionList';
 import styled from 'styled-components';
 
@@ -46,18 +45,10 @@ const CommentForm = ({post}) => {
 
         const data = { content:textAreaRef.current.innerHTML, userId: userId, postId: post.id ,nickname:nickname , emails}
         dispatch(postAction.addCommentRequest(data))
-        dispatch(notiAction.addNotificationRequest(data))
         textAreaRef.current.innerHTML = ''
         setMentionLoading(false);
       }, []);
     
-      useEffect(() => {
-        if (addCommentDone) {
-
-        }
-       
-      }, [addCommentDone]);
-
       const listKeydown = (e) => {
         if(!mentionLoading) return false;
         const className = "mention-list-hover";
@@ -82,14 +73,7 @@ const CommentForm = ({post}) => {
     }
 
       const onChangeCommentText = useCallback((e) => {
-        if(textAreaRef.current.offsetHeight < textAreaRef.current.scrollHeight) {
-          textAreaRef.current.style.overflowY = 'scroll'
-          document.getElementById("comment_btn").style.bottom='5px'
-        } else {
-          textAreaRef.current.style.overflowY = 'none'
-        }
-        console.log(textAreaRef.current.offsetHeight)
-        console.log(textAreaRef.current.scrollHeight)
+        
         if(textAreaRef.current.children[0]?.outerHTML === '<br>') {
           textAreaRef.current.children[0].remove()
           const node = createSpanTag('comment-text')
@@ -147,7 +131,6 @@ const CommentForm = ({post}) => {
             cursorNode.parentNode.className = 'close-mention-editor'
           }
           
-          
         }
 
       }, [mentionLoading]);
@@ -192,10 +175,10 @@ const CommentForm = ({post}) => {
 
             <Form onFinish={onSubmitComment}>
                 <Form.Item style={{ position: 'relative', margin: 0 }}>
-                    <DivInput className='ant-input' contentEditable='true' onClick={initSpan} onKeyDown={enterBlock} onKeyUp={onChangeCommentText} ref={textAreaRef}>
+                    <DivInput style={{overflowY:'auto'}} className='ant-input' contentEditable='true' onClick={initSpan} onKeyDown={enterBlock} onKeyUp={onChangeCommentText} ref={textAreaRef}>
                     </DivInput>
                     
-                    <Button id="comment_btn" loading={addCommentLoading} style={{ position: 'absolute', right: 0, bottom: 0, zIndex:1 }} type="primary" htmlType="submit">등록</Button>
+                    <Button id="comment-btn" loading={addCommentLoading} type="primary" htmlType="submit">등록</Button>
                 </Form.Item>
             </Form>
             

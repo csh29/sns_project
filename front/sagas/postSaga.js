@@ -289,6 +289,27 @@ function* removeImage(action) {
   }
 }
 
+function removeCommentAPI(data) {
+  return axios.delete(`/post/comment/${data.id}`);
+}
+
+function* removeComment(action) {
+  try{
+    const result = yield call(removeCommentAPI, action.payload)
+    action.payload.resolve()
+    yield put({
+      type: postAction.removeCommentSuccess,
+      data: {...result.data,PostId:action.payload.PostId}
+    })
+  } catch (err) {
+    console.log(err)
+    yield put({
+      type: postAction.removeCommentFailure,
+      error: err.response.data
+    })
+  }
+}
+
 function* takeLoadPosts () {
     yield takeLatest(postAction.loadPostsRequest, loadPosts);
 }
@@ -341,6 +362,10 @@ function* takeRemoveImage() {
   yield takeLatest(postAction.removeImageRequest, removeImage)
 }
 
+function* takeRemoveComment() {
+  yield takeLatest(postAction.removeCommentRequest, removeComment)
+}
+
 
 export default function* postSaga() {
     yield all([
@@ -357,5 +382,6 @@ export default function* postSaga() {
         fork(takeAddPostImage),
         fork(takeRemoveAllImage),
         fork(takeRemoveImage),
+        fork(takeRemoveComment),
     ])
 }

@@ -93,32 +93,6 @@ router.get("/load",isLoggedIn,async(req,res,next) => {
     }
 })
 
-router.post("/",isLoggedIn,async(req,res,next) => {
-    try{
-        const emails = req.body.emails
-        const set = new Set(emails);
-        const uniqueArr = [...set];
-        for (const email of uniqueArr) {
-            
-            const user = await User.findOne({where:{email}})
-
-            await Notification.create({
-                content:req.body.content,
-                senderId: req.user.id,
-                targetId: user.id,
-                UserId:req.user.id,
-                reception: 'N'
-            })
-        }
-  
-        
-        
-    } catch( err ) {
-        console.log(err)
-    }
-})
-
-
 cron.schedule(
 	'*/5 * * * * *',
 	async () => {

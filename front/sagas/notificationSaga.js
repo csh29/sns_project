@@ -2,29 +2,6 @@ import { all, call, delay, fork, put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 import { notiAction } from '../reducers/notification';
 
-
-
-function addNotificationAPI(data) {
-  return axios.post(`/notification/`,data);
-}
-
-
-function* addNotification(action) {
-    try {
-        const result = yield call(addNotificationAPI,action.payload);
-        yield put({
-          type: notiAction.addNotificationSuccess,
-          data: action.payload,
-        });
-    } catch (err) {
-        console.error(err);
-        yield put({
-          type: notiAction.addNotificationFailure,
-          error: err.response.data,
-        });
-    }
-}
-
 function receptionAPI(data) {
   return axios.post(`/notification/reception`,data);
 }
@@ -68,9 +45,6 @@ function* logout(action) {
 }
 
 
-function* takeAddNotification () {
-    yield takeLatest(notiAction.addNotificationRequest, addNotification);
-}
 function* takeReception () {
     yield takeLatest(notiAction.receptionRequest, reception);
 }
@@ -82,7 +56,6 @@ function* takeLogout () {
 
 export default function* postSaga() {
     yield all([
-        fork(takeAddNotification),
         fork(takeReception),
         fork(takeLogout),
     ])

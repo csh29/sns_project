@@ -1,4 +1,4 @@
-import { Card, Button, Avatar, Popover, List, Comment, Col, Row} from 'antd';
+import { Card, Button, Avatar, Popover, Col, Row} from 'antd';
 import { RetweetOutlined, HeartOutlined, MessageOutlined, EllipsisOutlined, HeartFilled } from '@ant-design/icons';
 import React, { useState, useCallback, useRef } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
@@ -12,6 +12,7 @@ import FollowButton from './FollowButton';
 import { ContextMenu } from '../components/Component'
 import PostForm from './PostForm';
 import { ModalComponent } from '../components/Component'
+import CommentList from './CommentList';
 
 const CardWrapper = styled.div`
   margin-bottom: 20px;
@@ -35,7 +36,7 @@ const PostCard = ({post , followings}) => {
     const [ comment , setOpenComment ] = useState(false);
     const id = useSelector((state) => state.user.user.id);
     const liked = post.Likers?.find((v) => v.id === id);
-
+    
     const LikeList = useCallback(({like}) => {
         const targetId = like.id;
         return (
@@ -127,6 +128,7 @@ const PostCard = ({post , followings}) => {
         dispatch(postAction.retweetRequest(data))
     }, [])
 
+
     return (
         <CardWrapper>
             <Global/>
@@ -209,21 +211,7 @@ const PostCard = ({post , followings}) => {
             ? 
             <>
                 <CommentForm post={post}/>
-                <List
-                    dataSource={post.Comments}
-                    renderItem={item => (
-                        <List.Item>
-                            <List.Item.Meta
-                                avatar={ <DropdownAvatar user={item.User}/> }
-                                title={item.User.nickname}
-                                description={
-                                    <div dangerouslySetInnerHTML={{__html:item.content}}></div>
-                                }
-                            />
-                        </List.Item>
-                    
-                    )}
-                />
+                <CommentList DropdownAvatar={DropdownAvatar} post={post}/>
             </>
             : null
             }

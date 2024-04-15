@@ -20,6 +20,11 @@ module.exports = class Notification extends Model {
         type: DataTypes.STRING(1000),
         allowNull: false,
       },
+      commentId: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      }
+
     }, {
       modelName: 'Notification',
       tableName: 'notifications',
