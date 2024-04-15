@@ -36,8 +36,6 @@ const PostCard = ({post , followings}) => {
     const id = useSelector((state) => state.user.user.id);
     const liked = post.Likers?.find((v) => v.id === id);
 
-
-
     const LikeList = useCallback(({like}) => {
         const targetId = like.id;
         return (
@@ -129,17 +127,6 @@ const PostCard = ({post , followings}) => {
         dispatch(postAction.retweetRequest(data))
     }, [])
 
-    const modalInputVal = modalInput.value;
-    
-    const handleOk = useCallback(() => {
-        const data = {
-            postId:post.id,
-            content: modalInputVal,
-        }
-        dispatch(postAction.updatePostRequest(data))
-        modalRef.current.setIsModalOpen(false);
-    }, [modalInputVal])
-
     return (
         <CardWrapper>
             <Global/>
@@ -194,10 +181,16 @@ const PostCard = ({post , followings}) => {
                     post.Likers.length > 0 ?
                     (
                         <>
-                            <CardMetaWrapper
-                                description={`좋아요 ${post.Likers.length}`}
-                                onClick={openLikeList}
-                            />
+                            <div style={{display:'flex',justifyContent:'flex-start'}}>
+                                <CardMetaWrapper
+                                    style={{marginRight:'auto'}}
+                                    description={`좋아요 ${post.Likers.length}`}
+                                    onClick={openLikeList}
+                                />
+                                    <CardMetaWrapper
+                                        description={`${post.Comments ? post.Comments.length : 0}개의 댓글`}
+                                    />
+                            </div>
                             <ModalComponent
                                 title="좋아요"
                                 ref={likeModalRef}
@@ -217,7 +210,6 @@ const PostCard = ({post , followings}) => {
             <>
                 <CommentForm post={post}/>
                 <List
-                    header={`${post.Comments ? post.Comments.length : 0}개의 댓글`}
                     dataSource={post.Comments}
                     renderItem={item => (
                         <List.Item>

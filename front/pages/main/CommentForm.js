@@ -9,7 +9,6 @@ import styled from 'styled-components';
 
 const DivInput = styled.div`
   height:95px;
-  overflow-y:scroll;
   &:hover {
     border-color: #40a9ff;
     border-right-width: 1px;
@@ -83,6 +82,14 @@ const CommentForm = ({post}) => {
     }
 
       const onChangeCommentText = useCallback((e) => {
+        if(textAreaRef.current.offsetHeight < textAreaRef.current.scrollHeight) {
+          textAreaRef.current.style.overflowY = 'scroll'
+          document.getElementById("comment_btn").style.bottom='5px'
+        } else {
+          textAreaRef.current.style.overflowY = 'none'
+        }
+        console.log(textAreaRef.current.offsetHeight)
+        console.log(textAreaRef.current.scrollHeight)
         if(textAreaRef.current.children[0]?.outerHTML === '<br>') {
           textAreaRef.current.children[0].remove()
           const node = createSpanTag('comment-text')
@@ -188,7 +195,7 @@ const CommentForm = ({post}) => {
                     <DivInput className='ant-input' contentEditable='true' onClick={initSpan} onKeyDown={enterBlock} onKeyUp={onChangeCommentText} ref={textAreaRef}>
                     </DivInput>
                     
-                    <Button loading={addCommentLoading} style={{ position: 'absolute', right: 0, bottom: -40, zIndex:1 }} type="primary" htmlType="submit">등록</Button>
+                    <Button id="comment_btn" loading={addCommentLoading} style={{ position: 'absolute', right: 0, bottom: 0, zIndex:1 }} type="primary" htmlType="submit">등록</Button>
                 </Form.Item>
             </Form>
             
