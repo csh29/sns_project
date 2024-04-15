@@ -68,7 +68,7 @@ router.get("/load",isLoggedIn,async(req,res,next) => {
                         attributes: ['nickname', 'profileImageUrl'],
                       }]
                 })
-    
+
                 resolve(notis)
             }).then(v => {
 
@@ -106,7 +106,7 @@ router.post("/",isLoggedIn,async(req,res,next) => {
                 content:req.body.content,
                 senderId: req.user.id,
                 targetId: user.id,
-                UserId:user.id,
+                UserId:req.user.id,
                 reception: 'N'
             })
         }
