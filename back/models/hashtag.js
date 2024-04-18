@@ -6,7 +6,7 @@ module.exports = class Hashtag extends Model {
     return super.init({
       // id가 기본적으로 들어있다.
       name: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING(50),
         allowNull: false,
       },
     }, {
