@@ -59,6 +59,10 @@ router.post("/retweet", isLoggedIn, async(req,res,next) => {
           model: Image,
         }]
       }, {
+        model: User, // 좋아요 누른 사람
+        as: 'Likers',
+        attributes: ['id','nickname','profileImageUrl'],
+      }, {
         model: User,
         attributes: ['id', 'nickname'],
       }, {
