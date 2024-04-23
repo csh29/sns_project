@@ -1,4 +1,4 @@
-import { Menu,  Input, Col, Row, Switch, Badge  } from 'antd';
+import { Menu,  Input, Col, Row, Switch, Avatar, Dropdown, Space  } from 'antd';
 import Link from 'next/link';
 import LoginForm from "../login/LoginForm";
 import UserInfo from "../main/UserInfo";
@@ -6,9 +6,7 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
 import { postAction } from '../../reducers/post';
-import { NotificationOutlined } from '@ant-design/icons';
 import { NotisMenu } from '../components/Component'
-import { notiAction } from '../../reducers/notification';
 
 const DivWrapper = styled.div`
     width: 99%;
@@ -20,18 +18,44 @@ const DivWrapper = styled.div`
     }
     
 `
-
 const LinkWrapper = styled.a`
     color: var(--color-primary) !important;
 `
 
-  
-
 const Layout = ({children,darkModeHandler}) => {
     const { isLogin , user , searchHashTagLoading } = useSelector((state) => state.user);
-    const { notisData } = useSelector((state) => state.noti);
+    
     const [defaultChecked,setDefaultChecked] = useState(false);
     const dispatch = useDispatch();
+
+    const DropdownAvatar = useCallback(({user}) => {
+        if(!user) return null;
+
+        const items = [{
+              label: <Link href={`/userinfo/${user.id}`}><div>설정</div></Link>,
+              key: '0',
+            },{
+                type: 'divider',
+            }];
+
+        if(user.profileImageUrl) {
+            return (
+                <Dropdown menu={{ items }} trigger={['click']}>
+                    <Space>
+                        <Avatar style={{cursor:'pointer'}} src={user.profileImageUrl}></Avatar>
+                    </Space>
+                </Dropdown>
+            )
+        } else {
+            return (
+                <Dropdown menu={{ items }} trigger={['click']}>
+                    <Space>
+                        <Avatar style={{cursor:'pointer'}} >{user.nickname[0]}</Avatar>
+                    </Space>
+                </Dropdown>
+            )
+        }
+    },[user])
 
     useEffect(() => {
         if(typeof window !== 'undefined') {
@@ -46,25 +70,6 @@ const Layout = ({children,darkModeHandler}) => {
 
     }, []);
 
-    useEffect(() => {
-        const eventSource = new EventSource(`${process.env.NEXT_PUBLIC_NODE_SERVER}/notification/load`,
-        {
-          withCredentials: true,
-          Accept: 'text/event-stream',
-          'Content-Type': 'text/event-stream; charset=utf-8'
-        }
-       );
-
-  
-      eventSource.addEventListener('message', (event) => {
-        const data = JSON.parse(event.data);
-        dispatch(notiAction.setNotisData(data));
-      });
-  
-      return () => {
-        eventSource.close()
-      }
-    },[isLogin])
 
     const searchHashTag = useCallback((hashtag) => {
         const data = {hashtag}
@@ -87,7 +92,7 @@ const Layout = ({children,darkModeHandler}) => {
             },
             {
                 
-                label: <NotisMenu data={notisData}><Badge count={notisData.length}><NotificationOutlined style={{fontSize:'18px',marginRight:'5px'}}/></Badge></NotisMenu>,
+                label: <NotisMenu ></NotisMenu>,
                 key: "notification",
             },
         ];
@@ -103,6 +108,11 @@ const Layout = ({children,darkModeHandler}) => {
                 key: "colorMode",
             })
         }
+        menuItems.push({
+            label: <DropdownAvatar user={user}/>,
+            id:'dropdownAvatar-common',
+            key: "info",
+        },)
 
         return <Menu mode="horizontal" items={menuItems}></Menu>
         

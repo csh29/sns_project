@@ -1,10 +1,10 @@
-import {  Input , Modal , Dropdown , Space } from 'antd';
+import {  Input , Modal , Dropdown , Space, Button, Badge } from 'antd';
 import Link from 'next/link';
 import { useCallback, useState, useImperativeHandle , forwardRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { userAction } from '../../reducers/user';
-import { CloseCircleFilled } from '@ant-design/icons';
+import { CloseCircleFilled, NotificationOutlined } from '@ant-design/icons';
 import {useDropzone} from 'react-dropzone';
 import { postAction } from '../../reducers/post';
 import { notiAction } from '../../reducers/notification';
@@ -20,9 +20,40 @@ const LabelWrapper = styled.label`
   transition: color 0.3s ease;
 `
 
-const NotisMenu = ({children,data}) => {
+const NotisMenu = ({children}) => {
   const dispatch = useDispatch();
-  const items = [];
+  const { notisData : data } = useSelector((state) => state.noti);
+  const { isLogin } = useSelector((state) => state.user);
+
+  useEffect(() => {
+      const eventSource = new EventSource(`${process.env.NEXT_PUBLIC_NODE_SERVER}/notification/load`,
+      {
+        withCredentials: true,
+        Accept: 'text/event-stream',
+        'Content-Type': 'text/event-stream; charset=utf-8'
+      }
+    );
+
+
+    eventSource.addEventListener('message', (event) => {
+      const data = JSON.parse(event.data);
+      dispatch(notiAction.setNotisData(data));
+    });
+
+    return () => {
+      eventSource.close()
+    }
+  },[isLogin])
+
+  const receptionAllNoti = useCallback(() => {
+    dispatch(notiAction.receptionAllNotiRequest());
+  },[])
+  const items = [{
+    label: <Button style={{borderRadius:'6px',}} type="primary" onClick={receptionAllNoti}>모두 읽음</Button>,
+    key: 'read'
+  },{
+    type: 'divider',
+  }];
 
   for (const v of data) {
     const html =  `${v.User.nickname}님이 언급하셨습니다. <br/>  ${v.content}` 
@@ -39,7 +70,7 @@ const NotisMenu = ({children,data}) => {
   return (
       <Dropdown menu={{ items }} trigger={['click']}>
           <Space>
-              {children}
+            <Badge count={data.length}><NotificationOutlined style={{fontSize:'18px',marginRight:'5px'}}/></Badge>
           </Space>
       </Dropdown>
   )

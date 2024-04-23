@@ -9,7 +9,7 @@ import { userAction } from "../../reducers/user";
 const Hashtag = () => {
     const router = useRouter();
     const dispatch = useDispatch();
-    const { mainPosts, hasMorePosts, loadPostsLoading } = useSelector((state) => state.post);
+    const { mainPosts } = useSelector((state) => state.post);
     const followings = useSelector((state) => state.user?.user?.Followings);
 
     const { id : hashtag } = router.query;
@@ -18,7 +18,6 @@ const Hashtag = () => {
         dispatch(postAction.postByHashTagRequest({hashtag:hashtag}))
     },[hashtag])
 
-    console.log(mainPosts)
     return (
         <Layout>
             {   

@@ -358,14 +358,14 @@ router.get("/hashtag/:hashtag",isLoggedIn, async(req,res,next) => {
         where:{name: req.params.hashtag}
       },{
         model: User,
-        attributes: ['id', 'nickname'],
+        attributes: ['id', 'nickname','profileImageUrl'],
       }, {
         model: Image,
       }, {
         model: Comment,
         include: [{
           model: User,
-          attributes: ['id', 'nickname'],
+          attributes: ['id', 'nickname','profileImageUrl'],
         }],
       }, {
         model: User, // 좋아요 누른 사람
@@ -376,7 +376,7 @@ router.get("/hashtag/:hashtag",isLoggedIn, async(req,res,next) => {
         as: 'Retweet',
         include: [{
           model: User,
-          attributes: ['id', 'nickname'],
+          attributes: ['id', 'nickname','profileImageUrl'],
         }, {
           model: Image,
         }]

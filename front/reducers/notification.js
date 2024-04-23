@@ -50,6 +50,16 @@ export const notificationSlice = createSlice({
       setNotisData: (state,action) => {
         state.notisData = action.payload;
       },
+
+      receptionAllNotiRequest: (state) => {
+
+      },
+      receptionAllNotiSuccess: (state,action) => {
+        state.notisData = [];
+      },
+      receptionAllNotiFailure: (state,action) => {
+        openNotification(action.error)
+      },
     },
   });
   

@@ -23,6 +23,17 @@ const notisHandler = {
 	},
 };
 
+router.post("/all/reception",isLoggedIn, async(req,res,next) => {
+    try{
+        await Notification.update(
+            {reception:'Y'},{where:{targetId: req.user.id}}
+        )
+        res.status(200);
+    } catch (err) {
+        console.log(err)
+        next(err);
+    }
+})
 
 router.post("/logout",isLoggedIn,async(req,res,next) => {
     try{ 
