@@ -122,6 +122,25 @@ function* updateNickname(action) {
   }
 }
 
+function updateRecptionAPI(data) {
+  return axios.post('/user/update/reception',data);
+}
+
+function* updateRecption(action) {
+  try{
+    const result = yield call(updateRecptionAPI, action.payload);
+    yield put({
+      type: userAction.updateRecptionSuccess,
+      data: result.data,
+    })
+  } catch(err) {
+    console.log(err);
+    yield put({
+      type: userAction.updateRecptionFailure,
+      error: err.response.data
+    })
+  }
+}
 
   
 function* takeLogin () {
@@ -148,6 +167,10 @@ function* takeUpdateNickname() {
   yield takeLatest(userAction.updateNicknameRequest, updateNickname);
 }
 
+function* takeUpdateRecption() {
+  yield takeLatest(userAction.updateRecptionRequest, updateRecption)
+}
+
 export default function* userSaga() {
     yield all([
       fork(takeLogin),
@@ -156,6 +179,7 @@ export default function* userSaga() {
       fork(takeLoadUser),
       fork(takeFollow),
       fork(takeUpdateNickname),
+      fork(takeUpdateRecption),
     ]);
   }
 

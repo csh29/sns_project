@@ -32,7 +32,7 @@ const Layout = ({children,darkModeHandler}) => {
         if(!user) return null;
 
         const items = [{
-              label: <Link href={`/userinfo/${user.id}`}><div>설정</div></Link>,
+              label: <Link href={`/setting/`}><div>설정</div></Link>,
               key: '0',
             },{
                 type: 'divider',

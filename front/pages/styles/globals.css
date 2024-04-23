@@ -164,3 +164,6 @@
   }
   
 #dropdownAvatar-common { margin-left: auto; }
+
+.setting-span-header { color: var(--color-primary); font-size: 1.125rem; line-height: 1.5; font-weight: bold;}
+.setting-span-body { color: var(--color-paragraph); font-size: .875rem; line-height: 1.5;}

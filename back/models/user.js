@@ -34,7 +34,10 @@ module.exports = class User extends Model {
         type: DataTypes.STRING(100),
         allowNull: true,
       },
-      
+      notiReception: {
+        type: DataTypes.STRING(1),
+        defaultValue: 'Y',
+      },
       
     }, {
       modelName: 'User',

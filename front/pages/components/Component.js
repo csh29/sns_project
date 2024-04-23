@@ -24,6 +24,7 @@ const NotisMenu = ({children}) => {
   const dispatch = useDispatch();
   const { notisData : data } = useSelector((state) => state.noti);
   const { isLogin } = useSelector((state) => state.user);
+  const notiReception = useSelector((state) => state.user?.user?.notiReception);
 
   useEffect(() => {
       const eventSource = new EventSource(`${process.env.NEXT_PUBLIC_NODE_SERVER}/notification/load`,
@@ -48,6 +49,8 @@ const NotisMenu = ({children}) => {
   const receptionAllNoti = useCallback(() => {
     dispatch(notiAction.receptionAllNotiRequest());
   },[])
+
+
   const items = [{
     label: <Button style={{borderRadius:'6px',}} type="primary" onClick={receptionAllNoti}>모두 읽음</Button>,
     key: 'read'
@@ -55,17 +58,21 @@ const NotisMenu = ({children}) => {
     type: 'divider',
   }];
 
-  for (const v of data) {
-    const html =  `${v.User.nickname}님이 언급하셨습니다. <br/>  ${v.content}` 
-    items.push({
-        label: (<div dangerouslySetInnerHTML={{ __html:html}}></div>),
-        key: v.id,
-        onClick:()=>{ dispatch(notiAction.receptionRequest({id:v.id})) }
+  if(notiReception === 'Y') {
+    for (const v of data) {
+      const html =  `${v.User.nickname}님이 언급하셨습니다. <br/>  ${v.content}` 
+      items.push({
+          label: (<div dangerouslySetInnerHTML={{ __html:html}}></div>),
+          key: v.id,
+          onClick:()=>{ dispatch(notiAction.receptionRequest({id:v.id})) }
+        })
+      items.push({
+          type: 'divider',
       })
-    items.push({
-        type: 'divider',
-    })
+    }
   }
+
+
 
   return (
       <Dropdown menu={{ items }} trigger={['click']}>

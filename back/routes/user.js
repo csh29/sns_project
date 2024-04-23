@@ -64,6 +64,27 @@ router.post("/logout",async(req,res,next) => {
   res.send('ok');
 })
 
+router.post("/update/reception", isLoggedIn, async (req,res,next) => {
+  try{ 
+    const reception = req.body.reception === 'Y' ? 'N' : 'Y';
+    const user = await User.findOne({
+      where: {id: req.user.id}
+    })
+
+    if(user) {
+      await User.update({
+        notiReception: reception
+      },{
+        where : {id:req.user.id}
+      })
+    }
+    res.status(200).json({reception});
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+})
+
 router.get("/",async (req,res,next) => {
   try{
     if(req.user) {

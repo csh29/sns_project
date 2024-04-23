@@ -122,7 +122,14 @@ export const userSlice = createSlice({
         openNotification(action.error)
       },
 
-
+      updateRecptionRequest: (state) => {
+      },
+      updateRecptionSuccess: (state,action) => {
+        state.user.nickname = action.data.nickname;
+      },
+      updateRecptionFailure: (state , action) => {
+        openNotification(action.error)
+      },
       
 
     },
