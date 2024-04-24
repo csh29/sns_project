@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
 import { postAction } from '../../reducers/post';
 import { NotisMenu } from '../components/Component'
+import { useRouter } from 'next/router';
 
 const DivWrapper = styled.div`
     width: 99%;
@@ -23,11 +24,12 @@ const LinkWrapper = styled.a`
 `
 
 const Layout = ({children,darkModeHandler}) => {
+    const router = useRouter();
     const { isLogin , user , searchHashTagLoading } = useSelector((state) => state.user);
     
     const [defaultChecked,setDefaultChecked] = useState(false);
     const dispatch = useDispatch();
-
+    
     const DropdownAvatar = useCallback(({user}) => {
         if(!user) return null;
 
@@ -118,24 +120,35 @@ const Layout = ({children,darkModeHandler}) => {
         
     }
 
-
-    return (
-        <DivWrapper>
-
-            <MenuComponent defaultChecked={defaultChecked}/>
-                
-            
-            <Row gutter={8}>
-                <Col xs={24} md={6}>
-                {!isLogin ? <LoginForm /> : <UserInfo user={user}/>}
-                </Col>
-                <Col xs={24} md={12}>
-                 {children}
-                </Col>
-            </Row>
-
-        </DivWrapper>
-    )
-}
+    if(router.pathname.indexOf("setting") !== -1) {
+        return (
+            <DivWrapper>
+                <MenuComponent defaultChecked={defaultChecked}/>
+                <Row gutter={8}>
+                    <Col xs={24} md={6}>
+                    </Col>
+                    <Col xs={24} md={12}>
+                     {children}
+                    </Col>
+                </Row>
+            </DivWrapper>
+        )
+    } else {
+        return (
+            <DivWrapper>
+                <MenuComponent defaultChecked={defaultChecked}/>
+                <Row gutter={8}>
+                    <Col xs={24} md={6}>
+                    {!isLogin ? <LoginForm /> : <UserInfo user={user}/>}
+                    </Col>
+                    <Col xs={24} md={12}>
+                     {children}
+                    </Col>
+                </Row>
+            </DivWrapper>
+        )
+    }
+    }
+    
 
 export default Layout;

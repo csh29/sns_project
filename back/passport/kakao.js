@@ -36,7 +36,7 @@ module.exports = () => {
     
                     if(result) {
                         await User.update({
-                            profileImageUrl: profileImage,
+                            //profileImageUrl: profileImage,
                             accessToken:accessToken
                         },{
                             where: {socialId: exUser.socialId}

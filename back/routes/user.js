@@ -66,11 +66,13 @@ router.post("/logout",async(req,res,next) => {
 
 router.post("/update/reception", isLoggedIn, async (req,res,next) => {
   try{ 
-    const reception = req.body.reception === 'Y' ? 'N' : 'Y';
+
     const user = await User.findOne({
       where: {id: req.user.id}
     })
 
+    const reception = user.notiReception === 'Y' ? 'N' : 'Y';
+console.log(reception)
     if(user) {
       await User.update({
         notiReception: reception

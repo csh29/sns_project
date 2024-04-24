@@ -4,6 +4,9 @@ const fs = require('fs');
 const { isLoggedIn } = require('./middlewares');
 const router = express.Router();
 const { Post, Image, Comment, User, Hashtag } = require('../models');
+const dotenv = require('dotenv');
+dotenv.config();
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` })
 
 const upload = multer({
     // 파일 저장 위치 (disk , memory 선택)
@@ -19,6 +22,36 @@ const upload = multer({
     limits: { fileSize: 5 * 1024 * 1024 }
   });
 
+  const profileUploader = multer({
+    // 파일 저장 위치 (disk , memory 선택)
+    storage: multer.diskStorage({
+        destination: function (req, file, done) {
+            done(null, 'profile/');
+        },
+        filename: function (req, file, done) {
+            done(null, Date.now() + file.originalname);
+        }
+    }),
+    // 파일 허용 사이즈 (5 MB)
+    limits: { fileSize: 5 * 1024 * 1024 }
+  });
+
+  router.post("/profile",isLoggedIn,profileUploader.single("file"),async (req,res,next) => {
+    try{
+      
+      const profileImageUrl = `${process.env.NODE_SERVER}/profile/${req.file.filename}`;
+      await User.update({
+        profileImageUrl: profileImageUrl
+      },{
+        where : {id: req.user.id}
+      })
+
+      res.status(200).json({profileImageUrl});
+    } catch(err) {
+      console.log(err);
+      next(err)
+    }
+  })
   router.delete("/removeall/:postId",isLoggedIn, async (req,res,next) => {
     try{
       const findImages = await Image.findAll({
@@ -83,6 +116,26 @@ const upload = multer({
       res.status(200).json("ok");
     
     } catch(err) {
+      console.log(err)
+      next(err);
+    }
+  })
+
+  router.post("/remove/profile",isLoggedIn, async(req,res,next) => {
+    try{
+      const user = await User.findOne({where:{id: req.user.id}})
+      const url = user.profileImageUrl;
+      if(url) {
+        
+        fs.unlinkSync(`.${url.substr(url.indexOf("/profile"))}`);
+      }
+      
+      await User.update({
+        profileImageUrl: null
+      },{
+        where: {id:req.user.id}
+      })
+    }catch(err) {
       console.log(err)
       next(err);
     }

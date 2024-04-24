@@ -142,7 +142,46 @@ function* updateRecption(action) {
   }
 }
 
+function uploadProfileImgAPI(data) {
+  return axios.post(`/upload/profile`,data.formData);
+}
+
+function* uploadProfileImg(action) {
+  try{
+    const result = yield call(uploadProfileImgAPI , action.payload);
+    yield put({
+      type: userAction.uploadProfileImgSuccess,
+      data: result.data
+    })
+  } catch (err) { 
+    console.log(err)
+    yield put({
+      type: userAction.uploadProfileImgFailure,
+      error: err.response.data
+    })
+  }
+}
+
+function removeProfileImgAPI() {
+  return axios.post("/upload/remove/profile");
+}
   
+function* removeProfileImg(action) {
+  try {
+    const result = yield call(removeProfileImgAPI);
+    yield put({
+      type: userAction.removeProfileImgSuccess,
+      data: result.data
+    })
+  } catch (err) { 
+    console.log(err);
+    yield put({
+      type: userAction.removeProfileImgFailure,
+      error: err.response.data
+    })
+  }
+}
+
 function* takeLogin () {
     yield takeLatest(userAction.loginRequest, logIn);
 }
@@ -171,6 +210,14 @@ function* takeUpdateRecption() {
   yield takeLatest(userAction.updateRecptionRequest, updateRecption)
 }
 
+function* takeUploadProfileImg() {
+  yield takeLatest(userAction.uploadProfileImgRequest, uploadProfileImg)
+}
+
+function* takeRemoveProfileImg() {
+  yield takeLatest(userAction.removeProfileImgRequest, removeProfileImg)
+}
+
 export default function* userSaga() {
     yield all([
       fork(takeLogin),
@@ -180,6 +227,8 @@ export default function* userSaga() {
       fork(takeFollow),
       fork(takeUpdateNickname),
       fork(takeUpdateRecption),
+      fork(takeUploadProfileImg),
+      fork(takeRemoveProfileImg),
     ]);
   }
 

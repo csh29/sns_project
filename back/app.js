@@ -63,6 +63,15 @@ app.get('/upload/:filename',(req,res) => {
   })
 })
 
+app.get('/profile/:filename',(req,res) => {
+  const filename = req.params.filename;
+  fs.readFile("./profile/"+filename, (error,data) => {
+    console.log(error,data)
+    res.writeHead(200, { 'Content-Type':'text/html'});
+    res.end(data)
+  })
+})
+
 app.listen(port, () => {
     console.log(`server is listening at localhost:${port}`);
 });

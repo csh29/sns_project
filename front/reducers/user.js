@@ -20,6 +20,7 @@ export const userSlice = createSlice({
       followLoading:false,
       isLogin: false,
       updateNicknameLoading: false,
+      updateRecptionLoading: false,
       user: null,
       imagePaths: [],
     },
@@ -123,15 +124,38 @@ export const userSlice = createSlice({
       },
 
       updateRecptionRequest: (state) => {
+        state.updateRecptionLoading = true;
       },
       updateRecptionSuccess: (state,action) => {
-        state.user.nickname = action.data.nickname;
+        state.user.notiReception = action.data.reception;
+        state.updateRecptionLoading = false;
       },
       updateRecptionFailure: (state , action) => {
         openNotification(action.error)
+        state.updateRecptionLoading = false;
+      },
+
+      uploadProfileImgRequest: (state) => {
+      },
+      uploadProfileImgSuccess: (state,action) => {
+        state.user.profileImageUrl = action.data.profileImageUrl
+      },
+      uploadProfileImgFailure: (state , action) => {
+        openNotification(action.error)
       },
       
+      removeProfileImgRequest: (state) => {
+      },
+      removeProfileImgSuccess: (state,action) => {
+        
+      },
+      removeProfileImgFailure: (state , action) => {
+        openNotification(action.error)
+      },
 
+      
+      
+      
     },
 });
 
