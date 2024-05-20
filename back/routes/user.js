@@ -72,7 +72,7 @@ router.post("/update/reception", isLoggedIn, async (req,res,next) => {
     })
 
     const reception = user.notiReception === 'Y' ? 'N' : 'Y';
-console.log(reception)
+
     if(user) {
       await User.update({
         notiReception: reception
@@ -220,6 +220,56 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
   })(req, res, next);
 });
 
+router.get("/search/:userId",isLoggedIn, async (req,res,next) => {
+  try{
 
+    const findUser = await User.findOne({
+      where: {id: req.params.userId},
+      attributes:{
+        exclude:['password']
+      },
+      include: [{
+        model: Post,
+        attributes: ['id'],
+      }, {
+        model: User,
+        as: 'Followings',
+        attributes: ['id','nickname','profileImageUrl','email'],
+      }, {
+        model: User,
+        as: 'Followers',
+        attributes: ['id','nickname','profileImageUrl','email'],
+      }]
+    })
+    res.status(200).json(findUser);
+
+  } catch(err) {
+    console.log(err);
+    next(err);
+  }
+})
+
+router.post("/profile",isLoggedIn, async (req,res,next) => {
+  try{
+    const user = await User.findOne({
+      where: {id: req.user.id}
+    })
+
+    const openProfile = user.openProfile === 'Y' ? 'N' : 'Y';
+
+    if(user) {
+      await User.update({
+        openProfile
+      },{
+        where : {id:req.user.id}
+      })
+    }
+    res.status(200).json({openProfile});
+
+  } catch(err) {
+    console.log(err);
+    next(err);
+  }
+})
 
 module.exports = router;

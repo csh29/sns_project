@@ -38,6 +38,10 @@ module.exports = class User extends Model {
         type: DataTypes.STRING(1),
         defaultValue: 'Y',
       },
+      openProfile: {
+        type: DataTypes.STRING(1),
+        defaultValue: 'Y',
+      },
       
     }, {
       modelName: 'User',

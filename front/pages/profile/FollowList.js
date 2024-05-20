@@ -2,7 +2,6 @@ import { Button, Card, List } from 'antd';
 import { StopOutlined } from '@ant-design/icons';
 
 const FollowList = ({header, data}) => {
-    console.log(data)
     return (
         <List
             style={{ marginBottom: '20px'}}

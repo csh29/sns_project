@@ -96,17 +96,25 @@ const ContextMenu = ({children,user,followings}) => {
         dispatch(userAction.followRequest(data))
     },[])
 
+    const param = encodeURIComponent(`id=${user.id}`);
     const items = [
         {
-          label: <Link href={`/userinfo/${user.id}`}><div>게시글 보기</div></Link>,
+          label: <Link href={`/profile?${param}`}><div>프로필 정보</div></Link>,
           key: '0',
         },
         {
             type: 'divider',
         },
         {
-          label: <div onClick={follow}> {findUser ? '언팔로우' : '팔로우'} </div>,
+          label: <Link href={`/userinfo/${user.id}`}><div>게시글 보기</div></Link>,
           key: '1',
+        },
+        {
+            type: 'divider',
+        },
+        {
+          label: <div onClick={follow}> {findUser ? '언팔로우' : '팔로우'} </div>,
+          key: '2',
         },
         
       ];

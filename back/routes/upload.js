@@ -135,6 +135,8 @@ const upload = multer({
       },{
         where: {id:req.user.id}
       })
+
+      res.status(200)
     }catch(err) {
       console.log(err)
       next(err);

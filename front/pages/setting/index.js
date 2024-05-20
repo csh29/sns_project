@@ -16,8 +16,8 @@ const Setting = ({darkModeHandler}) => {
     const uploadRef = useRef();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.user);
-    const updateRecptionLoading = useSelector((state) => state.user.updateRecptionLoading);
     const reception = user?.notiReception;
+    const openProfile = user?.openProfile;
     
     useEffect(() => {
         dispatch(userAction.loadUserRequest());
@@ -25,6 +25,10 @@ const Setting = ({darkModeHandler}) => {
 
     const changeSwitch = useCallback(() => {
         dispatch(userAction.updateRecptionRequest());
+    },[])
+
+    const changeProfileSwitch = useCallback(() => {
+        dispatch(userAction.updateProfileRequest());
     },[])
 
     const ProfileImage = useCallback(() => {
@@ -69,6 +73,11 @@ const Setting = ({darkModeHandler}) => {
                 <Row justify="center" >
                     <Col span={12}><h3 className="setting-span-header">이메일주소</h3></Col>
                     <Col span={12}> {user?.email} </Col>
+                </Row>
+                <div className="setting-divider"><Divider /></div>
+                <Row justify="center" >
+                    <Col span={12}><h3 className="setting-span-header">프로필정보 공개</h3></Col>
+                    <Col span={12}> <Switch onChange={changeProfileSwitch}  checked={openProfile === 'Y' ? true : false}/> </Col>
                 </Row>
                 <div className="setting-divider"><Divider /></div>
                 <Row justify="center" >

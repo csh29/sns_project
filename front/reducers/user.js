@@ -23,6 +23,7 @@ export const userSlice = createSlice({
       updateRecptionLoading: false,
       user: null,
       imagePaths: [],
+      searchUser: {},
     },
 
     reducers: {
@@ -147,15 +148,31 @@ export const userSlice = createSlice({
       removeProfileImgRequest: (state) => {
       },
       removeProfileImgSuccess: (state,action) => {
-        
+        state.user.profileImageUrl = null;
       },
       removeProfileImgFailure: (state , action) => {
         openNotification(action.error)
       },
 
-      
-      
-      
+      searchUserRequest: (state) => {
+        state.searchUser = {};
+      },
+      searchUserSuccess: (state,action) => {
+        state.searchUser = action.data;
+      },
+      searchUserFailure: (state , action) => {
+        openNotification(action.error)
+      },
+
+      updateProfileRequest: (state) => {
+
+      },
+      updateProfileSuccess: (state,action) => {
+        state.user.openProfile = action.data.openProfile;
+      },
+      updateProfileFailure: (state , action) => {
+        openNotification(action.error)
+      },
     },
 });
 

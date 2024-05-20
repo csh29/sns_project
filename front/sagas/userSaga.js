@@ -182,6 +182,46 @@ function* removeProfileImg(action) {
   }
 }
 
+function searchUserAPI(data) {
+  return axios.get(`/user/search/${data.userId}`);
+}
+  
+function* searchUser(action) {
+  try {
+    const result = yield call(searchUserAPI,action.payload);
+    yield put({
+      type: userAction.searchUserSuccess,
+      data: result.data
+    })
+  } catch (err) { 
+    console.log(err);
+    yield put({
+      type: userAction.searchUserFailure,
+      error: err.response.data
+    })
+  }
+}
+
+function updateProfileAPI(data) {
+  return axios.post(`/user/profile/`,data);
+}
+  
+function* updateProfile(action) {
+  try {
+    const result = yield call(updateProfileAPI,action.payload);
+    yield put({
+      type: userAction.updateProfileSuccess,
+      data: result.data
+    })
+  } catch (err) { 
+    console.log(err);
+    yield put({
+      type: userAction.updateProfileFailure,
+      error: err.response.data
+    })
+  }
+}
+
 function* takeLogin () {
     yield takeLatest(userAction.loginRequest, logIn);
 }
@@ -218,6 +258,14 @@ function* takeRemoveProfileImg() {
   yield takeLatest(userAction.removeProfileImgRequest, removeProfileImg)
 }
 
+function* takeSearchUser() {
+  yield takeLatest(userAction.searchUserRequest, searchUser)
+}
+
+function* takeUpdateProfile() {
+  yield takeLatest(userAction.updateProfileRequest, updateProfile)
+}
+
 export default function* userSaga() {
     yield all([
       fork(takeLogin),
@@ -229,6 +277,8 @@ export default function* userSaga() {
       fork(takeUpdateRecption),
       fork(takeUploadProfileImg),
       fork(takeRemoveProfileImg),
+      fork(takeSearchUser),
+      fork(takeUpdateProfile),
     ]);
   }
 

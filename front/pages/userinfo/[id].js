@@ -5,19 +5,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import PostCard from '../main/PostCard';
 import { useEffect } from 'react';
 import { postAction } from '../../reducers/post';
+import { userAction } from '../../reducers/user';
 
 
 const UserInfo = ({darkModeHandler}) => {
     const dispatch = useDispatch();
     const router = useRouter();
     const { id : userId } = router.query;
-    const userInfo = useSelector((state) => state.user.user)
+    const userInfo = useSelector((state) => state.user.searchUser)
     const mainPosts = useSelector((state) => state.post.mainPosts)
     const followings = useSelector((state) => state.user?.user?.Followings);
 
     useEffect(() => {
         const data = { userId }
         dispatch(postAction.loadPostByUserId(data));
+        dispatch(userAction.searchUserRequest(data));
     }, []);
 
     return (
